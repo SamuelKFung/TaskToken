@@ -6,8 +6,8 @@ This browser based web application to organize all your tasks in one place. Feat
 
 ## 2. Names of Contributors
 List team members and/or short bio's here... 
+* Hi, my name is Daniel! I am excited to fix the Learning Hub!
 * Hi, my name is Samuel! I enjoy playing badminton, gaming and hiking whenever I have free time.
-* ...
 * Hi I'm Owen, and I like to lift weights.
 	
 ## 3. Technologies and Resources Used
