@@ -1,0 +1,19 @@
+footer {
+    width: 100%;
+    border-top: 2px solid lightgray;
+    padding: 2%;
+}
+.left_icons {
+    float: left;
+    width: 20%;
+}
+.right_icons {
+    float: right;
+    width: 50%;
+}
+.right_icons i {
+    float: right;
+}
+i {
+    margin: 2%;
+}
