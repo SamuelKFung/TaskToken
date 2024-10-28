@@ -1,3 +1,8 @@
+/* Makes background color consistent for all pages*/
+html {
+    min-height: 100%;
+}
+
 /* Background color for all pages */
 body {
     background: rgb(0,0,0);
@@ -5,8 +10,6 @@ body {
     background: -webkit-linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(16,42,67,1) 100%);
     background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(16,42,67,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#102a43",GradientType=1);
-    width: 100vw;
-    height: 100vh;
 }
 
 /* Hero section of main page */
