@@ -1,5 +1,38 @@
+/* Background color for all pages */
 body {
-    background-color: rgb(30, 30, 66);
+    background: rgb(0,0,0);
+    background: -moz-linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(16,42,67,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(16,42,67,1) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(16,42,67,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#102a43",GradientType=1);
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Hero section of main page */
+.header-center {
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+#hero-image {
+    opacity: 0.85;
+    max-width: 80%;
+    height: auto;
+}
+
+.logo-size {
+    width: 20%;
+}
+
+.feature-remove-padding {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+}
+
+.feature-uniform-padding {
+    padding: 10%;
 }
 
 /* Welcome message & login */
