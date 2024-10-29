@@ -4,7 +4,8 @@
 <head>
   <title>TaskToken</title>
   <meta name="comp1800 template" content="My 1800 App">
-
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+  <script src="scripts/calendar.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -32,7 +33,7 @@
   <link rel="stylesheet" href="./styles/style.css">
 </head>
 
-<body>
+<body id="home-view">
 
   <!------------------------------>
   <!-- Your HTML Layout go here -->
@@ -66,7 +67,6 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-
         </ul>
 
         <!-- Logout Button -->
@@ -74,6 +74,9 @@
       </div>
     </div>
   </nav>
+
+  <!-- Calendar from FullCalendar JS library-->
+  <div id="calendar"></div>
 
   <!-- Footer -->
   <div class="container">
@@ -84,7 +87,6 @@
         class="col-md-4 d-flex align-items-center justify-content-center mb-0 mb-md-0 me-md-auto text-decoration-none">
         Our Pitch Video
       </a>
-
       <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About Us</a></li>
       </ul>
@@ -99,7 +101,7 @@
   <script src="./scripts/firebaseAPI_TEAM09.js"></script>
   <script src="./scripts/skeleton.js"></script>
   <script src="./scripts/script.js"></script>
-
+  <script src="./scripts/todolist.js"></script>
   <script>
     logout();       //make sure user is logged out
   </script>
