@@ -78,32 +78,15 @@
         </div>
     </nav>
 
-    <!-- the body of your page goes here -->
-    <div class="container">
-        <h1>Let's Login!</h1>
-    </div>
-    <div id="firebaseui-auth-container"></div>
-    <div id="loader">Loading...</div>
-
-    <!-- our own footer goes here-->
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-muted">&copy; 2024 TaskToken</p>
-
-            <a href="https://youtu.be/qNUnhoqJ2SA"
-                class="col-md-4 d-flex align-items-center justify-content-center mb-0 mb-md-0 me-md-auto text-decoration-none">
-                Our Pitch Video
-            </a>
-
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About Us</a></li>
-            </ul>
-        </footer>
+    <!-- Firebase login -->
+    <div id="login-container">
+        <div id="firebaseui-auth-container"></div>
+        <div id="loader">Loading...</div>
     </div>
 
-    <!---------------------------------------------->
-    <!-- Your own JavaScript functions go here    -->
-    <!---------------------------------------------->
+    <!-- Footer -->
+    <nav id="footerPlaceholder"></nav>
+
     <script src="./scripts/firebaseAPI_BBY09.js"></script>
     <script src="./scripts/skeleton.js"></script>
     <script src="./scripts/authentication.js"></script>
