@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-  <title>TaskToken</title>
+  <title>Main</title>
   <meta name="comp1800 template" content="My 1800 App">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -33,44 +33,8 @@
 </head>
 
 <body>
-
-  <!------------------------------>
-  <!-- Your HTML Layout go here -->
-  <!------------------------------>
-  <!-- Stuff for body goes here -->
-
   <!-- Nav Bar-->
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">TaskToken</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Dropdown button
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-
-        </ul>
-
-      </div>
-  </nav>
+  <nav id="navbarPlaceholder"></nav>
 
   <!-- Hero Section -->
   <div class="container col-xxl-8 px-4 py-5">
@@ -85,8 +49,6 @@
           all
           while enjoying a fun reward system that keeps you motivated.</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <a href="login.html"><button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Sign Up</button></a>
-          <a href="login.html"><button type="button" class="btn btn-outline-secondary btn-lg px-4">Login</button></a>
         </div>
       </div>
     </div>
@@ -144,7 +106,6 @@
   <!-- Link to scripts of your own -->
   <script src="./scripts/firebaseAPI_BBY09.js"></script>
   <script src="./scripts/skeleton.js"></script>
-  <script src="./scripts/script.js"></script>
 </body>
 
 </html>
