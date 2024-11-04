@@ -23,7 +23,7 @@ var uiConfig = {
                        school: "BCIT"                          //optional default profile info
                 }).then(function () {
                        console.log("New user added to firestore");
-                       window.location.assign("home.html");       //re-direct to home.html after signup
+                       window.location.assign("main.html");       //re-direct to main.html after signup
                 }).catch(function (error) {
                        console.log("Error adding new user: " + error);
                 });

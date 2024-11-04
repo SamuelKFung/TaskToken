@@ -20,10 +20,10 @@ var uiConfig = {
                        name: user.displayName,                    //"users" collection
                        email: user.email,                         //with authenticated user's ID (user.uid)
                        country: "Canada",                      //optional default profile info      
-                       school: "BCIT"                          //optional default profile info
+                                           school: "BCIT"                          //optional default profile info
                 }).then(function () {
                        console.log("New user added to firestore");
-                       window.location.assign("home.html");       //re-direct to home.html after signup
+                       window.location.assign("main.html");       //re-direct to main.html after signup
                 }).catch(function (error) {
                        console.log("Error adding new user: " + error);
                 });
@@ -32,6 +32,7 @@ var uiConfig = {
             }
                 return false;
             },
+        },
         uiShown: function () {
             // The widget is rendered.
             // Hide the loader.
