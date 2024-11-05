@@ -38,88 +38,85 @@
     <!-- Nav Bar -->
     <nav id="navbarPlaceholder"></nav>
 
-    <!-- Task list with buttons -->
-    <div class="ms-2 me-2">
-        <div class="clearfix">
-            <button type="button" class="btn btn-primary float-end mt-2 mb-2" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="Add Task">Add Task</button>
-        </div>
-        <!-- Modal for add and edit buttons -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="title" class="col-form-label">Title:</label>
-                                <input type="text" class="form-control" id="title" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="date" class="col-form-label">Date:</label>
-                                <input type="datetime-local" class="form-control" id="date" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="description" class="col-form-label">Description:</label>
-                                <textarea class="form-control" id="description"></textarea required>
-                            </div>
+
+    <!-- Modal for add and edit buttons -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="col-form-label">Date:</label>
+                            <input type="datetime-local" class="form-control" id="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description"></textarea required>
+                        </div>
                     </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success">Confirm</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success">Confirm</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Modal for delete button -->
-        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Task</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h3 class="text-center">Are you sure?</h3>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger">Delete Task</button>
-                    </div>
+    <!-- Modal for delete button -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteeModalLabel">Delete Task</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="text-center">Are you sure?</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger">Delete Task</button>
                 </div>
             </div>
         </div>
-   <!-- List of Tasks-->
-   <!-- the body of your page goes here -->
+    </div>
 
-  
-<div class="container"> 
-    <h1>Upcoming Tasks</h1>
+   <!-- List of Tasks-->  
+<div class="container mt-4"> 
+    <div class="d-flex mb-4">
+        <h2>Upcoming Tasks</h2>
+        <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal"
+        data-bs-target="#exampleModal" data-bs-whatever="Add Task">Add Task</button>
+    </div>
     <!-- Here is the container for cards  -->
     <div class="container">
       <ul class="list-group list-group row row-cols-auto" id="tasks-go-here">
       </ul>
     </div>
 </div>
-<!-- Templates for general use, not displayed -->
 
+<!-- Templates for general use, not displayed -->
 <template id="cardTemplate">
-  <li class="list-group-item d-flex justify-content-between align-items-start">
+  <li class="list-group-item d-flex justify-content-between align-items-start fs-5">
     <div class="ms-2 me-auto">
       <div class="fw-bold card-title">Subheading</div>
       <span class="card-text">14</span>
       <p class="card-course"></p>
     </div>
-    <span class="badge bg-primary rounded-pill card-due">14</span>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2"
-    data-bs-whatever="Delete Task">Delete Task</button>
-    <button type="button" class="btn btn-secondary float-end mx-2" data-bs-toggle="modal"
+    <span class="badge bg-primary rounded-pill card-due fs-5 mx-4 mt-auto mb-auto">14</span>
+    <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
     data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
+    <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
+    data-bs-whatever="Delete Task">Delete Task</button>
   </li>
 </template>
 
