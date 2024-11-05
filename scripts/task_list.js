@@ -91,3 +91,14 @@ if (exampleModal) {
   })
 }
 displayCardsDynamically("tasks");  //input param is the name of the collection
+
+document.querySelector("#addTask").addEventListener("click", function (e) {
+    //console.log(e);
+    var title = document.getElementById("title").value;
+
+    var  tasksRef = db.collection("tasks");
+
+    tasksRef.add({
+        name: title
+    })
+});
