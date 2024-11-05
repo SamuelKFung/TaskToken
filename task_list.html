@@ -94,23 +94,34 @@
                 </div>
             </div>
         </div>
+   <!-- List of Tasks-->
+   <!-- the body of your page goes here -->
 
-        <!-- List of Tasks -->
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1"><span id="task-name-goes-here"></span></h5>
-                    <small><span id="due-date-goes-here"></small>
-                </div>
-                <p class="mb-1"><span id="description-goes-here"></p>
-                <small><span id="course-goes-here">.</small>
-                <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#exampleModal2"
-                    data-bs-whatever="Delete Task">Delete Task</button>
-                <button type="button" class="btn btn-secondary float-end mx-2" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
-            </a>
-        </div>
+  
+<div class="container"> 
+    <h1>Upcoming Tasks</h1>
+    <!-- Here is the container for cards  -->
+    <div class="container">
+      <ul class="list-group list-group row row-cols-auto" id="tasks-go-here">
+      </ul>
     </div>
+</div>
+<!-- Templates for general use, not displayed -->
+
+<template id="cardTemplate">
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold card-title">Subheading</div>
+      <span class="card-text">14</span>
+      <p class="card-course"></p>
+    </div>
+    <span class="badge bg-primary rounded-pill card-due">14</span>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+    data-bs-whatever="Delete Task">Delete Task</button>
+    <button type="button" class="btn btn-secondary float-end mx-2" data-bs-toggle="modal"
+    data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
+  </li>
+</template>
 
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>
@@ -119,7 +130,6 @@
     <script src="scripts/firebaseAPI_BBY09.js"></script>
     <script src="scripts/skeleton.js"></script>
     <script src="scripts/task_list.js"></script>
-
 </body>
 
 </html>
