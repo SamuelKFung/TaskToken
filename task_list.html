@@ -40,18 +40,43 @@
 
 
    <!-- List of Tasks-->
-   <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1" ><span id="task-name-goes-here"></span></h5>
-        <small><span id="due-date-goes-here"></small>
-      </div>
-      <p class="mb-1"><span id="descripition-goes-here"></p>
-      <small><span id="course-goes-here">.</small>
-    </a>
-  </div>
+   <!-- the body of your page goes here -->
 
-    <!-- List of Tasks-->
+  
+<div class="container"> 
+    <h1>Some popular hikes</h1>
+    <!-- Here is the container for cards  -->
+    <div class="container">
+      <ul class="list-group list-group row row-cols-auto" id="hikes-go-here">
+      </ul>
+    </div>
+</div>
+<!-- Templates for general use, not displayed -->
+<!-- <template id="hikeCardTemplate">
+    <div class="card py-2 mx-2" style="width: 18rem">
+        <img class="card-image card-img-top" src=" ..." alt="..." />
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-length">placeholder</p>
+            <br />
+            <p class="card-text">
+                Some quick example text to build on the card title and make up the
+                bulk of the card's content.
+            </p>
+            <a class="btn btn-primary card-href">Read more ...</a>
+        </div>
+    </div>
+</template> -->
+
+<template id="hikeCardTemplate">
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold card-title">Subheading</div>
+      <span class="card-text">14</span>
+    </div>
+    <span class="badge bg-primary rounded-pill card-length">14</span>
+  </li>
+</template>
 
 
 
@@ -62,7 +87,6 @@
     <script src="scripts/firebaseAPI_BBY09.js"></script>
     <script src="scripts/skeleton.js"></script>
     <script src="scripts/task_list.js"></script>
-
 </body>
 
 </html>
