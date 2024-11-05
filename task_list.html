@@ -35,25 +35,82 @@
 </head>
 
 <body>
-    <!-- Nav Bar-->
+    <!-- Nav Bar -->
     <nav id="navbarPlaceholder"></nav>
 
+    <!-- Task list with buttons -->
+    <div class="ms-2 me-2">
+        <div class="clearfix">
+            <button type="button" class="btn btn-primary float-end mt-2 mb-2" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="Add Task">Add Task</button>
+        </div>
+        <!-- Modal for add and edit buttons -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="title" class="col-form-label">Title:</label>
+                                <input type="text" class="form-control" id="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date" class="col-form-label">Date:</label>
+                                <input type="datetime-local" class="form-control" id="date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="col-form-label">Description:</label>
+                                <textarea class="form-control" id="description"></textarea required>
+                            </div>
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-   <!-- List of Tasks-->
-   <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1" ><span id="task-name-goes-here"></span></h5>
-        <small><span id="due-date-goes-here"></small>
-      </div>
-      <p class="mb-1"><span id="descripition-goes-here"></p>
-      <small><span id="course-goes-here">.</small>
-    </a>
-  </div>
+        <!-- Modal for delete button -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Task</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h3 class="text-center">Are you sure?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger">Delete Task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <!-- List of Tasks-->
-    
-
+        <!-- List of Tasks -->
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"><span id="task-name-goes-here"></span></h5>
+                    <small><span id="due-date-goes-here"></small>
+                </div>
+                <p class="mb-1"><span id="description-goes-here"></p>
+                <small><span id="course-goes-here">.</small>
+                <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                    data-bs-whatever="Delete Task">Delete Task</button>
+                <button type="button" class="btn btn-secondary float-end mx-2" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
+            </a>
+        </div>
+    </div>
 
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>

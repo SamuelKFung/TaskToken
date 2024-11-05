@@ -6,7 +6,7 @@ function readTaskName(task) {
             console.log("current document data: " + taskDoc.data());                          //.data() returns data object
             document.getElementById("task-name-goes-here").innerHTML = taskDoc.data().name;      //using javascript to display the data on the right place
             document.getElementById("due-date-goes-here").innerHTML = taskDoc.data().due; 
-            document.getElementById("descripition-goes-here").innerHTML = taskDoc.data().description; 
+            document.getElementById("description-goes-here").innerHTML = taskDoc.data().description; 
             document.getElementById("course-goes-here").innerHTML = taskDoc.data().course; 
             //Here are other ways to access key-value data fields
             //$('#quote-goes-here').text(dayDoc.data().quote);         //using jquery object dot notation
@@ -54,3 +54,28 @@ function displayCardsDynamically(collection) {
 }
 
 displayCardsDynamically("hikes");  //input param is the name of the collection
+
+// 
+const exampleModal = document.getElementById('exampleModal')
+if (exampleModal) {
+  exampleModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const recipient = button.getAttribute('data-bs-whatever')
+    // If necessary, you could initiate an Ajax request here
+    // and then do the updating in a callback.
+    console.log(recipient)
+    if (recipient == "Edit Task") {
+        const modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
+        const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
+        const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
+        modalTitle.value = document.getElementById('task-name-goes-here').innerHTML;
+        modalDate.value = document.getElementById('due-date-goes-here').innerHTML;
+        modalDescription.value = document.getElementById('description-goes-here').innerHTML;
+    }
+    // Update the modal's content.
+    const modalTitle = exampleModal.querySelector('.modal-title')
+    modalTitle.textContent = recipient
+  })
+}
