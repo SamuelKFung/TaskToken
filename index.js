@@ -55,6 +55,14 @@ app.get("/footer_after_login", function (req, res) {
     res.send(doc);
 });
 
+app.get("/login", function (req, res) {
+    let doc = fs.readFileSync("./app/html/login.html", "utf8");
+
+    // sending the text stream
+    res.send(doc);
+});
+
+
 
 // for the page not found (i.e. 404)
 app.use(function (req, res, next) {
