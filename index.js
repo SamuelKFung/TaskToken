@@ -62,6 +62,34 @@ app.get("/login", function (req, res) {
     res.send(doc);
 });
 
+app.get("/home", function (req, res) {
+    let doc = fs.readFileSync("./app/html/home.html", "utf8");
+
+    // sending the text stream
+    res.send(doc);
+});
+
+app.get("/task_list", function (req, res) {
+    let doc = fs.readFileSync("./app/html/task_list.html", "utf8");
+
+    // sending the text stream
+    res.send(doc);
+});
+
+app.get("/course_list", function (req, res) {
+    let doc = fs.readFileSync("./app/html/course_list.html", "utf8");
+
+    // sending the text stream
+    res.send(doc);
+});
+
+app.get("/profile", function (req, res) {
+    let doc = fs.readFileSync("./app/html/profile.html", "utf8");
+
+    // sending the text stream
+    res.send(doc);
+});
+
 
 
 // for the page not found (i.e. 404)

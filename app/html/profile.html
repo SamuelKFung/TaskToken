@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-    <title>Create Task</title>
+    <title>Main</title>
     <meta name="comp1800 template" content="My 1800 App">
 
     <!-- Required meta tags -->
@@ -31,39 +31,49 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <!-- Link to styles of your own -->
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <!-- Nav Bar-->
     <nav id="navbarPlaceholder"></nav>
-
-    <!-- Task Creation -->
-    <p class="text-center">Programming Methods - COMP1510</p>
-    <div class="row">
-        <input type="text" class="form-control" placeholder="Assignment name" aria-label="Assignment name">
-    </div>
-    <div class="row">
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Grade" aria-label="Grade">
-        </div>
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Weight" aria-label="Weight">
-        </div>
-    </div>
-    <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" rows="3"></textarea>
-    </div>
-    <button type="button" class="btn btn-primary">Create</button>
-
+    <div class="container">
+        <h1>User Profile </h1>
+        <form>
+            <fieldset class="mb-3" id="personalInfoFields" disabled>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>School</label>
+                    <input type="text" id="schoolInput" class="form-control" placeholder="Enter your school">
+                </div>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
+                </div>
+            </fieldset>
+            <div class="d-flex justify-content-end mt-5">
+                <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
+                <span style="width: 10px"></span>
+                <button type="button" class="btn btn-info" onclick="saveUserInfo()" >Save</button>
+            </div>
+        </form>
+</div>
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>
 
-    <!-- Link to scripts of your own -->
-    <script src="scripts/firebaseAPI_BBY09.js"></script>
-    <script src="scripts/skeleton.js"></script>
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
 
+    <!-- Link to scripts of your own -->
+    <script src="js/client.js"></script>
+    <script src="js/firebaseAPI_BBY09.js"></script>
+    <script src="js/profile.js"></script>
+    <script src="js/skeleton.js"></script>
+    
 </body>
 
 </html>

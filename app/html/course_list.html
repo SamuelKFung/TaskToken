@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-    <title>Course Grade List</title>
+    <title>Course List</title>
     <meta name="comp1800 template" content="My 1800 App">
 
     <!-- Required meta tags -->
@@ -37,66 +37,23 @@
 <body>
     <!-- Nav Bar-->
     <nav id="navbarPlaceholder"></nav>
-    <p class="text-center">Programming Methods - COMP 1510</p>
-
-    <!-- Categories -->
-    <div class="categories">
-        <ul class="list-group">
+    <p class="text-center">Your Courses</p>
+    <ul class="list-group">
+        <a href="course_grade.html">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Labs
-                <span class="badge bg-primary rounded-pill">90%</span>
-            </li></a>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Quizzes
-                <span class="badge bg-primary rounded-pill">86%</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Assignments
-                <span class="badge bg-primary rounded-pill">95%</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Exams
-                <span class="badge bg-primary rounded-pill">71%</span>
-            </li>
-        </ul>
-        <br>
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                All Categories (Average)
+                Programming Methods - COMP1510
                 <span class="badge bg-primary rounded-pill">85%</span>
             </li>
-        </ul>
-    </div><br><br>
-
-    <p class="text-center">Labs</p>
-
-    <!-- Assignments  -->
-    <div class="assignments">
-    <ul class="list-group">
+        </a>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Lab 01
-            <span class="badge bg-primary rounded-pill">Due: <span id="lab01-due-date-goes-here"></span></span>
-            <span class="badge bg-primary rounded-pill"><span id="lab01-grade-goes-here"></span>%</span>
+            Applied Mathematics - COMP1113
+            <span class="badge bg-primary rounded-pill">76%</span>
         </li>
         <li class="list-group-item d-flex justify-content-between align-items-center">
-            Lab 02
-            <span class="badge bg-primary rounded-pill">Due: <span id="lab02-due-date-goes-here"></span></span>
-            <span class="badge bg-primary rounded-pill"><span id="lab02-grade-goes-here"></span>%</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            Lab 03
-            <span class="badge bg-primary rounded-pill">Due: <span id="lab03-due-date-goes-here"></span></span>
-            <span class="badge bg-primary rounded-pill"><span id="lab03-grade-goes-here"></span>%</span>
+            Web Development - COMP1537
+            <span class="badge bg-primary rounded-pill">91%</span>
         </li>
     </ul>
-    <br>
-    <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            All Labs (Average)
-            <span class="badge bg-primary rounded-pill">80%</span>
-        </li>
-    </ul>
-    </div>
 
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>
@@ -104,7 +61,6 @@
     <!-- Link to scripts of your own -->
     <script src="js/firebaseAPI_BBY09.js"></script>
     <script src="js/skeleton.js"></script>
-    <script src="js/course_grade.js"></script>
 
 </body>
 
