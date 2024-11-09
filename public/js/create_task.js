@@ -19,9 +19,13 @@ function savePost() {
         if (user) {
             // User is signed in.
             // Do something for the user here. 
+            var name = document.getElementById("name").value;
+            var date = document.getElementById("date").value;
             var desc = document.getElementById("description").value;
             db.collection("posts").add({
                 owner: user.uid,
+                name: name,
+                date: date,
                 description: desc,
                 last_updated: firebase.firestore.FieldValue
                     .serverTimestamp() //current system time

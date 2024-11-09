@@ -3,6 +3,8 @@
 node_modules/
 .vscode/
 firebaseAPI_BBY09.js
+showposts.html
+showposts.js
 
 # npm
 node_modules

@@ -51,7 +51,7 @@
                     <form>
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="title" required>
+                            <input type="text" class="form-control" id="name" required>
                         </div>
                         <div class="mb-3">
                             <label for="date" class="col-form-label">Date:</label>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" id="addTask" class="btn btn-success">Confirm</button>
+                    <button type="button" id="addTask" class="btn btn-success" onclick="savePost()">Confirm</button>
                 </div>
             </div>
         </div>
@@ -108,9 +108,8 @@
 <template id="taskCardTemplate">
   <li class="list-group-item d-flex justify-content-between align-items-start fs-5">
     <div class="ms-2 me-auto">
-      <div class="fw-bold card-title">Subheading</div>
-      <span class="card-text">14</span>
-      <p class="card-course"></p>
+      <div class="fw-bold card-name">Subheading</div>
+      <p class="card-description"></p>
     </div>
     <span class="badge bg-primary rounded-pill card-due fs-5 mx-4 mt-auto mb-auto">14</span>
     <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
@@ -120,29 +119,10 @@
   </li>
 </template>
 
-
-
-
-    <!-- Templates for general use, not displayed
-    <template id="postCardTemplate">
-        <li class="list-group-item d-flex justify-content-between align-items-start fs-5">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold card-title">Subheading</div>
-                <span class="card-text">14</span>
-                <p class="card-course"></p>
-            </div>
-            <span class="badge bg-primary rounded-pill card-due fs-5 mx-4 mt-auto mb-auto">14</span>
-            <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
-            <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal"
-                data-bs-target="#deleteModal" data-bs-whatever="Delete Task">Delete Task</button>
-        </li>
-    </template> -->
-
     <!-- Link to scripts of your own -->
     <script src="js/firebaseAPI_BBY09.js"></script>
     <script src="js/skeleton.js"></script>
-    <script src="js/showposts.js"></script>
+    <script src="js/task_list.js"></script>
 
 </body>
 
