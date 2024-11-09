@@ -20,6 +20,7 @@ app.get("/", function (req, res) {
     res.send(doc);
 });
 
+
 app.get("/about", function (req, res) {
     let doc = fs.readFileSync("./app/html/about.html", "utf8");
 
