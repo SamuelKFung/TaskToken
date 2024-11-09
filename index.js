@@ -13,6 +13,13 @@ app.use("/img", express.static("./public/img"));
 
 
 // get the root node
+app.get("/create_task", function (req, res) {
+    let doc = fs.readFileSync("./app/html/create_task.html", "utf8");
+
+    // sending the text stream
+    res.send(doc);
+});
+
 app.get("/", function (req, res) {
     let doc = fs.readFileSync("./app/html/index.html", "utf8");
 
