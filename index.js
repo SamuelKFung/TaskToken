@@ -91,6 +91,12 @@ app.get("/profile", function (req, res) {
     res.send(doc);
 });
 
+app.get("/course_grade", function (req, res) {
+    let doc = fs.readFileSync("./app/html/course_grade.html", "utf8");
+
+    // sending the text stream
+    res.send(doc);
+});
 
 
 // for the page not found (i.e. 404)
