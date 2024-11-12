@@ -1,3 +1,29 @@
+// Dynamically change modals based on which button is pressed 
+const exampleModal = document.getElementById('exampleModal');
+if (exampleModal) {
+    exampleModal.addEventListener('show.bs.modal', event => {
+        // Button that triggered the modal
+        const button = event.relatedTarget
+        // Extract info from data-bs-* attributes
+        const recipient = button.getAttribute('data-bs-whatever')
+        const modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
+        // If necessary, you could initiate an Ajax request here
+        // and then do the updating in a callback.
+        if (recipient == "Add Task") {
+            modalTitle.value = "";
+        }
+        /*
+        if (recipient == "Edit Task") {
+            modalTitle.value = document.getElementById('task-name-goes-here').innerHTML;
+            modalDate.value = document.getElementById('due-date-goes-here').innerHTML;
+            modalDescription.value = document.getElementById('description-goes-here').innerHTML;
+        }*/
+        // Update the modal's content.
+        const modalTitleContent = exampleModal.querySelector('.modal-title');
+        modalTitleContent.textContent = recipient;
+    })
+}
+
 var currentUser;               //points to the document of the user who is logged in
 function populateUserInfo() {
             firebase.auth().onAuthStateChanged(user => {
@@ -38,38 +64,3 @@ function populateUserInfo() {
 
 //call the function to run it 
 populateUserInfo();
-
-function editUserInfo() {
-    //Enable the form fields
-    document.getElementById('personalInfoFields').disabled = false;
- }
-
- function saveUserInfo() {
-    //enter code here
-
-    //a) get user entered values
-    userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-    userSchool = document.getElementById('schoolInput').value;     //get the value of the field with id="schoolInput"
-    userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput" 
-    userNumLabs = document.getElementById("numLabsInput").value;
-    userNumQuizzes = document.getElementById("numQuizzesInput").value;
-    userNumAssignments = document.getElementById("numAssignmentsInput").value;
-    userNumExams = document.getElementById("numExamsInput").value;
-
-    //b) update user's document in Firestore
-    currentUser.update({
-        name: userName,
-        school: userSchool,
-        city: userCity,
-        numLabs: userNumLabs,
-        numQuizzes: userNumQuizzes,
-        numAssignments: userNumAssignments,
-        numExams: userNumExams
-    })
-    .then(() => {
-        console.log("Document successfully updated!");
-    })
-
-    //c) disable edit 
-    document.getElementById('personalInfoFields').disabled = true;
-}
