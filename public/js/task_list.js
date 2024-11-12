@@ -1,4 +1,5 @@
 // Dynamically change modals based on which button is pressed 
+
 const exampleModal = document.getElementById('exampleModal');
 if (exampleModal) {
     exampleModal.addEventListener('show.bs.modal', event => {
@@ -28,6 +29,47 @@ if (exampleModal) {
     })
 }
 
+
+function writeReview() {
+    let taskName = document.getElementById("title").value;
+    let taskDate = document.getElementById("date").value;
+    let taskDescription = document.getElementById("description").value;
+    console.log(taskName, taskDate, taskDescription);
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            db.collection("users").doc(user.uid).collection("assignments").add({
+                title: taskName,
+                
+            })
+            
+        } else {
+            console.log("fail");
+        }
+    });
+
+}
+/*
+        // Get the document for the current user.
+        db.collection("reviews").add({
+            hikeDocID: hikeDocID,
+            userID: userID,
+            title: hikeTitle,
+            level: hikeLevel,
+            season: hikeSeason,
+            description: hikeDescription,
+            flooded: hikeFlooded,
+            scrambled: hikeScrambled,
+            rating: hikeRating, // Include the rating in the review
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            window.location.href = "thanks.html"; // Redirect to the thanks page
+        });
+    } else {
+        console.log("No user is signed in");
+        window.location.href = 'review.html';
+    }
+}
+/*
 //-------------------------------------------------
 // this function shows finds out who is logged in,
 // reads the "myposts" field (an array) for that user, 
@@ -40,7 +82,7 @@ function showMyTasks() {
             db.collection("users").doc(user.uid)
                     .get()
                     .then(doc => {
-                        myposts = doc.data().myposts; //get array of my posts
+                        myposts = doc.data().posts; //get array of my posts
                         console.log(myposts);
                         myposts.forEach(item => {
                             console.log("item is: " + item)
@@ -75,7 +117,7 @@ function displayMytaskCard(doc) {
             //append to the posts
             document.getElementById("mytasks-go-here").append(newcard);
 }
-
+/*
 function savePost() {
     alert ("SAVE POST is triggered");
     firebase.auth().onAuthStateChanged(function (user) {
@@ -123,4 +165,4 @@ function savePostIDforUser(postDocID) {
                 console.error("Error writing document: ", error);
            });
     })
-}
+}*/
