@@ -17,13 +17,13 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * Firebase 8.0 (BAAS - Backend as a Service)
 * Flaticon (Icons)
 * FullCalendar (JavaScript library)
+* Node/Express web application framework
 
 ## 4. Complete setup/installion/usage
 State what a user needs to do when they come to your project.  How do others start using your code or application?
 Here are the steps ...
-* ...
-* ...
-* ...
+* Perform npm install node in the root folder
+* Run node index.js in the root
 
 ## 5. Known Bugs and Limitations
 Here are some known bugs:
@@ -43,6 +43,8 @@ Content of the project folder:
 ```
  Top level of project folder: 
 ├── .gitignore               # Git ignore file
+├── app
+├── public
 ├── index.html               # landing HTML file, this is what users see when you come to url
 └── README.md
 
