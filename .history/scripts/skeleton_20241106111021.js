@@ -19,3 +19,21 @@ function loadSkeleton() {
     });
 }
 loadSkeleton(); //invoke the function
+
+// Function to load labs.html when the Labs button is clicked
+function loadLabs() {
+    // Redirects the user to labs.html
+    window.location.href = 'labs.html';
+}
+
+// Add event listener to the Labs button
+document.getElementById('clickLabs').addEventListener('click', loadLabs);
+
+
+loadLabs();
+
+loadAssignments();
+
+loadQuizzes();
+
+loadExams();
