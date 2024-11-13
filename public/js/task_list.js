@@ -28,12 +28,37 @@ if (exampleModal) {
     })
 }
 
+function writeTasks() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
+            var taskName = document.getElementById('title').value;
+            var taskCategory = document.getElementById('category').value;
+            var taskDescription = document.getElementById('description').value;
+            var taskdueDate = document.getElementById('date').value;
+            tasksRef.add({
+                name: taskName,
+                category: taskCategory,
+                description: taskDescription,
+                duedate: taskdueDate,
+                status: false
+            });
+            console.log("Task added!");
+            var myModalEl = document.getElementById('exampleModal');
+            var modal = bootstrap.Modal.getInstance(myModalEl)
+            modal.hide();
+        } else {
+            console.log("No user is signed in");
+        }
+    });
+}
+/*
 function getTasks(){
     firebase.auth().onAuthStateChanged(function(user) {
         if (user){
             console.log(user.uid)
             db.collection("users").doc(user.uid)
-            .collection("tasks") //subcollection
+            .collection("") //subcollection
             .get()
             .then(doclist=>{
                 doclist.forEach(doc=>{
