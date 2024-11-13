@@ -28,6 +28,27 @@ if (exampleModal) {
     })
 }
 
+function getTasks(){
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user){
+            console.log(user.uid)
+            db.collection("users").doc(user.uid)
+            .collection("tasks") //subcollection
+            .get()
+            .then(doclist=>{
+                doclist.forEach(doc=>{
+                    console.log (doc.data());   //unpack and see all the attributes
+                    //document.getElementById("tasks-go-here").innerHTML += "<p> " + doc.data().title + " </p>"
+                }
+                )
+            })
+        } else{
+            console.log("No user logged in");
+        }
+    })
+}
+getTasks();
+/*
 //-------------------------------------------------
 // this function shows finds out who is logged in,
 // reads the "myposts" field (an array) for that user, 
@@ -123,4 +144,4 @@ function savePostIDforUser(postDocID) {
                 console.error("Error writing document: ", error);
            });
     })
-}
+}*/
