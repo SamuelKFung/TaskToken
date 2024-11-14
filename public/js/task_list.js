@@ -29,6 +29,52 @@ if (exampleModal) {
     })
 }
 
+function writeTasks() {
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
+            var taskName = document.getElementById('title').value;
+            var taskCategory = document.getElementById('category').value;
+            var taskDescription = document.getElementById('description').value;
+            var taskdueDate = document.getElementById('date').value;
+            tasksRef.add({
+                name: taskName,
+                category: taskCategory,
+                description: taskDescription,
+                duedate: taskdueDate,
+                status: false
+            });
+            console.log("Task added!");
+            var myModalEl = document.getElementById('exampleModal');
+            var modal = bootstrap.Modal.getInstance(myModalEl)
+            modal.hide();
+        } else {
+            console.log("No user is signed in");
+        }
+    });
+}
+/*
+function getTasks(){
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user){
+            console.log(user.uid)
+            db.collection("users").doc(user.uid)
+            .collection("") //subcollection
+            .get()
+            .then(doclist=>{
+                doclist.forEach(doc=>{
+                    console.log (doc.data());   //unpack and see all the attributes
+                    //document.getElementById("tasks-go-here").innerHTML += "<p> " + doc.data().title + " </p>"
+                }
+                )
+            })
+        } else{
+            console.log("No user logged in");
+        }
+    })
+}
+getTasks();
+=======
 
 function writeReview() {
     let taskName = document.getElementById("title").value;
@@ -69,6 +115,7 @@ function writeReview() {
         window.location.href = 'review.html';
     }
 }
+
 /*
 //-------------------------------------------------
 // this function shows finds out who is logged in,

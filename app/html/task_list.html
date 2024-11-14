@@ -50,8 +50,17 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
+
+                            <label for="title" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Category:</label>
+                            <input type="text" class="form-control" id="category" required>
+
                             <label for="title" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="title" required>
+
                         </div>
                         <div class="mb-3">
                             <label for="date" class="col-form-label">Date:</label>
@@ -65,7 +74,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                    <button type="button" id="addTask" class="btn btn-success" onclick="writeTasks()">Confirm</button>
+
                     <button type="button" id="addTask" class="btn btn-success" onclick="writeReview()">Confirm</button>
+
                 </div>
             </div>
         </div>
