@@ -1,5 +1,6 @@
+var form = document.getElementById("formId");
+form.addEventListener('submit', writeTasks);
 // Dynamically change modals based on which button is pressed 
-
 const exampleModal = document.getElementById('exampleModal');
 if (exampleModal) {
     exampleModal.addEventListener('show.bs.modal', event => {
@@ -29,7 +30,8 @@ if (exampleModal) {
     })
 }
 
-function writeTasks() {
+function writeTasks(event) {
+    event.preventDefault();
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
@@ -54,6 +56,7 @@ function writeTasks() {
     });
 }
 
+/*
 function getTasks(){
     firebase.auth().onAuthStateChanged(function(user) {
         if (user){
@@ -118,4 +121,4 @@ function savePostIDforUser(postDocID) {
                 console.error("Error writing document: ", error);
            });
     })
-}
+}*/
