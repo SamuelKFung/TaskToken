@@ -85,13 +85,14 @@ function displayMytaskCard(doc) {
             var name = doc.data().name; // get value of the "name" key
             var desc = doc.data().description; 
             var due = doc.data().duedate; 
+            var category = doc.data().category;
             var status = doc.data().status ? "Open":"Close";
             //clone the new card
             let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
             //populate with title, image
             newcard.querySelector('.card-name').innerHTML = name;
-            newcard.querySelector('.card-status').innerHTML = status
-            //newcard.querySelector('.card-image').src = image;
+            newcard.querySelector('.card-status').innerHTML = status;
+            newcard.querySelector('.card-category').innerHTML = category;
             newcard.querySelector('.card-description').innerHTML = desc;
             newcard.querySelector('.card-due').innerHTML = due;
             //append to the posts
