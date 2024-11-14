@@ -54,6 +54,8 @@ function writeTasks(event) {
             console.log("No user is signed in");
         }
     });
+    document.getElementById('mytasks-go-here').innerHTML = "";
+    getTasks();
 }
 
 
@@ -76,7 +78,7 @@ function getTasks(){
         }
     })
 }
-getTasks(); 
+getTasks();
 
 //------------------------------------------------------------
 // this function displays ONE card, with information
