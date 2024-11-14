@@ -58,14 +58,3 @@ function populateCourseInfo() {
 
 //call the function to run it 
 populateCourseInfo();
-
-//a) get user entered values
-userCourseName = document.getElementById('course_name').value;
-
-//b) update user's document in Firestore
-currentUser.update({
-    courseName: userCourseName
-})
-.then(() => {
-    console.log("Document successfully updated!");
-})

@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-    <title>Create Task</title>
+    <title>Course List</title>
     <meta name="comp1800 template" content="My 1800 App">
 
     <!-- Required meta tags -->
@@ -38,7 +38,6 @@
     <!-- Nav Bar-->
     <nav id="navbarPlaceholder"></nav>
 
-
     <!-- Modal for add and edit buttons -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -49,41 +48,20 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="mb-3">
-
+                       
                             <label for="title" class="col-form-label">Name:</label>
-                            <input type="text" class="form-control" id="title" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="title" class="col-form-label">Category:</label>
-                            <input type="text" class="form-control" id="category" required>
-
-                            <label for="title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="title" required>
-
-                        </div>
-                        <div class="mb-3">
-                            <label for="date" class="col-form-label">Date:</label>
-                            <input type="datetime-local" class="form-control" id="date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" id="description"></textarea required>
-                        </div>
+                            <input type="text" class="form-control" id="name" required>
+                    
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-
-                    <button type="button" id="addTask" class="btn btn-success" onclick="writeTasks()">Confirm</button>
-
-                    <button type="button" id="addTask" class="btn btn-success" onclick="writeReview()">Confirm</button>
-
+                    <button type="button" id="addTask" class="btn btn-success" onclick="savePost()">Confirm</button>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!-- Modal for delete button -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -102,43 +80,59 @@
             </div>
         </div>
     </div>
-
-    <!-- List of Tasks-->  
-    <div class="container mt-4"> 
+        
+    <div class="container mt-4">
         <div class="d-flex mb-4">
-            <h2>Upcoming Tasks</h2>
-            <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal"
-            data-bs-target="#exampleModal" data-bs-whatever="Add Task">Add Task</button>
+            <h2>Your Courses</h2>
+            <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="Add Course">Add Course</button>
         </div>
         <!-- Here is the container for cards  -->
         <div class="container">
-        <ul class="list-group list-group row row-cols-auto" id="mytasks-go-here">
-        </ul>
+            <ul class="list-group list-group row row-cols-auto" id="mytasks-go-here">
+            </ul>
         </div>
     </div>
 
     <!-- Templates for general use, not displayed -->
     <template id="taskCardTemplate">
-    <li class="list-group-item d-flex justify-content-between align-items-start fs-5">
-        <div class="ms-2 me-auto">
-        <div class="fw-bold card-name">Subheading</div>
-        <p class="card-description"></p>
-        </div>
-        <span class="badge bg-primary rounded-pill card-due fs-5 mx-4 mt-auto mb-auto">14</span>
-        <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
-        data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
-        <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
-        data-bs-whatever="Delete Task">Delete Task</button>
-    </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start fs-5">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold card-name">Subheading</div>
+                <p class="card-description"></p>
+            </div>
+            <span class="badge bg-primary rounded-pill card-due fs-5 mx-4 mt-auto mb-auto">14</span>
+            <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
+            <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal"
+                data-bs-target="#deleteModal" data-bs-whatever="Delete Task">Delete Task</button>
+        </li>
     </template>
-
+    <!--
+    <ul class="list-group">
+        <a href="/course_grade">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Programming Methods - COMP1510
+                <span class="badge bg-primary rounded-pill">85%</span>
+            </li>
+        </a>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Applied Mathematics - COMP1113
+            <span class="badge bg-primary rounded-pill">76%</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            Web Development - COMP1537
+            <span class="badge bg-primary rounded-pill">91%</span>
+        </li>
+    </ul>
+    -->
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>
-        
+
     <!-- Link to scripts of your own -->
     <script src="js/firebaseAPI_BBY09.js"></script>
     <script src="js/skeleton.js"></script>
-    <script src="js/task_list.js"></script>
+    <script src="js/course_list.js"></script>
 
 </body>
 

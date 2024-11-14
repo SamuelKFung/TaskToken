@@ -50,6 +50,7 @@
                     <form>
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Name:</label>
+
                             <input type="text" class="form-control" id="name" required>
                         </div>
                         <div class="mb-3">
@@ -64,6 +65,10 @@
                             <label for="description" class="col-form-label">Description:</label>
                             <textarea class="form-control" id="description"></textarea required>
                         </div>
+
+                            <input type="text" class="form-control" id="course_name" required>
+                    
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -96,7 +101,8 @@
     <div class="container mt-4">
         <div class="d-flex mb-4">
             <h2>Your Courses</h2>
-            <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            <button type="button" class="btn btn-primary ms-auto"
+             data-bs-toggle="modal" data-bs-target="#exampleModal"
                 data-bs-whatever="Add Course">Add Course</button>
         </div>
         <!-- Here is the container for cards  -->

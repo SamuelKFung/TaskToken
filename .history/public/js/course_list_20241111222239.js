@@ -25,7 +25,7 @@ if (exampleModal) {
 }
 
 var currentUser;               //points to the document of the user who is logged in
-function populateCourseInfo() {
+function populateUserInfo() {
             firebase.auth().onAuthStateChanged(user => {
                 // Check if user is signed in:
                 if (user) {
@@ -36,7 +36,7 @@ function populateCourseInfo() {
                     currentUser.get()
                         .then(userDoc => {
                             //get the data fields of the user
-                            let courseName = userDoc.data().course_name;
+                            let courseName = userDoc.data().name;
 
                             //if the data fields are not empty, then write them in to the form.
                             if (userName != null) {
@@ -57,15 +57,4 @@ function populateCourseInfo() {
         }
 
 //call the function to run it 
-populateCourseInfo();
-
-//a) get user entered values
-userCourseName = document.getElementById('course_name').value;
-
-//b) update user's document in Firestore
-currentUser.update({
-    courseName: userCourseName
-})
-.then(() => {
-    console.log("Document successfully updated!");
-})
+populateUserInfo();

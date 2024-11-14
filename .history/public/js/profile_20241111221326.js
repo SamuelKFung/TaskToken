@@ -52,9 +52,6 @@ function editUserInfo() {
     userSchool = document.getElementById('schoolInput').value;     //get the value of the field with id="schoolInput"
     userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput" 
     userNumLabs = document.getElementById("numLabsInput").value;
-    userNumQuizzes = document.getElementById("numQuizzesInput").value;
-    userNumAssignments = document.getElementById("numAssignmentsInput").value;
-    userNumExams = document.getElementById("numExamsInput").value;
 
     //b) update user's document in Firestore
     currentUser.update({
