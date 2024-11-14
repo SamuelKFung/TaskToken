@@ -56,7 +56,7 @@ function writeTasks(event) {
     });
 }
 
-/*
+
 function getTasks(){
     firebase.auth().onAuthStateChanged(function(user) {
         if (user){
@@ -76,9 +76,7 @@ function getTasks(){
         }
     })
 }
-getTasks();
-
-  
+getTasks(); 
 
 //------------------------------------------------------------
 // this function displays ONE card, with information
@@ -101,24 +99,3 @@ function displayMytaskCard(doc) {
             //append to the posts
             document.getElementById("mytasks-go-here").append(newcard);
 }
-
-//--------------------------------------------
-//saves the post ID for the user, in an array
-//--------------------------------------------
-function savePostIDforUser(postDocID) {
-    firebase.auth().onAuthStateChanged(user => {
-          console.log("user id is: " + user.uid);
-          console.log("postdoc id is: " + postDocID);
-          db.collection("users").doc(user.uid).update({
-                myposts: firebase.firestore.FieldValue.arrayUnion(postDocID)
-          })
-          .then(() =>{
-                console.log("5. Saved to user's document!");
-                                alert ("Post is complete!");
-                //window.location.href = "showposts.html";
-           })
-           .catch((error) => {
-                console.error("Error writing document: ", error);
-           });
-    })
-}*/
