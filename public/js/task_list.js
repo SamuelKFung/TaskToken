@@ -11,12 +11,16 @@ if (exampleModal) {
         // Extract info from data-bs-* attributes
         const recipient = button.getAttribute('data-bs-whatever')
         const modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
+        const modalCourse = exampleModal.querySelector(".modal-body input[id='course']");
+        const modalCategory = exampleModal.querySelector(".modal-body input[id='category']");
         const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
         const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
         // If necessary, you could initiate an Ajax request here
         // and then do the updating in a callback.
         if (recipient == "Add Task") {
             modalTitle.value = "";
+            modalCourse.value = "";
+            modalCategory.value = "";
             modalDate.value = "";
             modalDescription.value = "";
         }
@@ -57,6 +61,7 @@ function writeTasks(event) {
             console.log("No user is signed in");
         }
     });
+    document.getElementById('mytasks-go-here').innerHTML = "";
     getTasks();
 }
 
@@ -87,7 +92,6 @@ getTasks();
 // from the post document extracted (name, description, image)
 //------------------------------------------------------------
 function displayMytaskCard(doc) {
-            document.getElementById('mytasks-go-here').innerHTML = "";
             var name = doc.data().name; // get value of the "name" key
             var desc = doc.data().description; 
             var due = doc.data().duedate; 
