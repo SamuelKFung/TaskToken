@@ -1,5 +1,7 @@
+// Listens to submit button for adding task
 var form = document.getElementById("formId");
 form.addEventListener('submit', writeTasks);
+
 // Dynamically change modals based on which button is pressed 
 const exampleModal = document.getElementById('exampleModal');
 if (exampleModal) {
@@ -30,6 +32,7 @@ if (exampleModal) {
     })
 }
 
+// Takes all values from add task modal and stores it in firestore
 function writeTasks(event) {
     event.preventDefault();
     firebase.auth().onAuthStateChanged(user => {
@@ -54,11 +57,10 @@ function writeTasks(event) {
             console.log("No user is signed in");
         }
     });
-    document.getElementById('mytasks-go-here').innerHTML = "";
     getTasks();
 }
 
-
+// Reads tasks data from firestore
 function getTasks(){
     firebase.auth().onAuthStateChanged(function(user) {
         if (user){
@@ -85,6 +87,7 @@ getTasks();
 // from the post document extracted (name, description, image)
 //------------------------------------------------------------
 function displayMytaskCard(doc) {
+            document.getElementById('mytasks-go-here').innerHTML = "";
             var name = doc.data().name; // get value of the "name" key
             var desc = doc.data().description; 
             var due = doc.data().duedate; 
