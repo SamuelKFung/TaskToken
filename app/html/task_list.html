@@ -57,8 +57,13 @@
                             <input type="text" class="form-control" id="course" required>
                         </div>
                         <div class="mb-3">
-                            <label for="title" class="col-form-label">Category:</label>
-                            <input type="text" class="form-control" id="category" required>
+                            <label for="category" class="col-form-label">Category:</label>
+                            <select class="form-select" id="category" aria-label="Default select example">
+                                <option value="assignments" selected>Assignments</option>
+                                <option value="quizzes">Quizzes</option>
+                                <option value="labs">Labs</option>
+                                <option value="projects">Projects</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="date" class="col-form-label">Due Date:</label>

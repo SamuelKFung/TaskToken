@@ -12,7 +12,7 @@ if (exampleModal) {
         const recipient = button.getAttribute('data-bs-whatever')
         const modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
         const modalCourse = exampleModal.querySelector(".modal-body input[id='course']");
-        const modalCategory = exampleModal.querySelector(".modal-body input[id='category']");
+        const modalCategory = exampleModal.querySelector(".modal-body select[id='category']");
         const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
         const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
         // If necessary, you could initiate an Ajax request here
@@ -20,7 +20,7 @@ if (exampleModal) {
         if (recipient == "Add Task") {
             modalTitle.value = "";
             modalCourse.value = "";
-            modalCategory.value = "";
+            modalCategory.value = "assignments";
             modalDate.value = "";
             modalDescription.value = "";
         }
