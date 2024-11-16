@@ -94,7 +94,8 @@ var count = 1;
 function displayMytaskCard(doc) {
             var name = doc.data().name; // get value of the "name" key
             var desc = doc.data().description; 
-            var due = doc.data().duedate; 
+            var due = doc.data().duedate;
+            console.log(due) 
             var category = doc.data().category;
             var status = doc.data().status ? "Open":"Close";
 
@@ -117,7 +118,8 @@ function displayMytaskCard(doc) {
             //clone the new card
             let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
             //populate with title, image
-            newcard.querySelector('.card-name').innerHTML = name;
+                
+            newcard.querySelector('.card-name').innerHTML = name + "<span class=\"badge bg-primary rounded-pill card-due fs-5 mx-4 mt-auto mb-auto\">14</span>";
             //newcard.querySelector('.card-status').innerHTML = status;
             //newcard.querySelector('.card-category').innerHTML = category;
             newcard.querySelector('.card-description').innerHTML = desc;
