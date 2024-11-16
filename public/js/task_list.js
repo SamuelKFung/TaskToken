@@ -86,7 +86,7 @@ function getTasks(){
     })
 }
 getTasks();
-
+var count = 1; 
 //------------------------------------------------------------
 // this function displays ONE card, with information
 // from the post document extracted (name, description, image)
@@ -97,12 +97,29 @@ function displayMytaskCard(doc) {
             var due = doc.data().duedate; 
             var category = doc.data().category;
             var status = doc.data().status ? "Open":"Close";
+
+            // Changing the attribues of the button so that it only closes one and not all
+            let accordianBtn = document.getElementById("toggleBtn");
+            if (accordianBtn) {
+                accordianBtn.setAttribute("aria-controls", "collapse" + count);
+                accordianBtn.setAttribute("data-bs-target", "#collapse" + count);
+                accordianBtn.removeAttribute("id");
+            }
+
+            // https://www.geeksforgeeks.org/how-to-change-the-id-of-element-using-javascript/
+            let collapseID = document.getElementById("collapseOne")
+            console.log(collapseID)
+            if (collapseID) {
+                collapseID.id = "collapse" + count++;
+            }
+
+            
             //clone the new card
             let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
             //populate with title, image
             newcard.querySelector('.card-name').innerHTML = name;
-            newcard.querySelector('.card-status').innerHTML = status;
-            newcard.querySelector('.card-category').innerHTML = category;
+            //newcard.querySelector('.card-status').innerHTML = status;
+            //newcard.querySelector('.card-category').innerHTML = category;
             newcard.querySelector('.card-description').innerHTML = desc;
             newcard.querySelector('.card-due').innerHTML = due;
             //append to the posts
