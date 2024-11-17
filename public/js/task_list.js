@@ -95,8 +95,12 @@ var count = 1;
 function displayMytaskCard(doc) {
             var name = doc.data().name; // get value of the "name" key
             var desc = doc.data().description; 
-            var due = doc.data().duedate;
-            console.log(due) 
+            let due = new Date(doc.data().duedate);
+            let today = new Date();
+            let yearsUntilDue = due.getYear() - today.getYear()
+            let monthsUntilDue = due.getMonth() - today.getMonth();
+            let daysUntilDue = due.getDate() - today.getDate();
+            console.log(daysUntilDue) 
             var category = doc.data().category;
             var status = doc.data().status ? "Open":"Close";
 
@@ -105,7 +109,7 @@ function displayMytaskCard(doc) {
             if (accordianBtn) {
                 accordianBtn.setAttribute("aria-controls", "collapse" + count);
                 accordianBtn.setAttribute("data-bs-target", "#collapse" + count);
-                accordianBtn.removeAttribute("id");
+                accordianBtn.removeAttribute("id");    
             }
 
             // https://www.geeksforgeeks.org/how-to-change-the-id-of-element-using-javascript/
@@ -115,16 +119,40 @@ function displayMytaskCard(doc) {
                 collapseID.id = "collapse" + count++;
             }
 
+            let pillBadgeColor;
+            if(daysUntilDue > 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
+                pillBadgeColor = "text-bg-primary";
+            } else if (daysUntilDue > 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
+                pillBadgeColor = "text-bg-warning";
+            } else if(daysUntilDue <= 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
+                pillBadgeColor = "text-bg-danger";
+            } else {
+                pillBadgeColor = "bg-primary"
+            }
+            
+            let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">14</span>";
+            
+            let dueText;
+            if (Math.abs(yearsUntilDue) < 1 ) {
+                if (Math.abs(monthsUntilDue) < 1) {
+                    dueText = daysUntilDue + (daysUntilDue == 1 ? " day" : " days");
+                } else {
+                    dueText = monthsUntilDue + (monthsUntilDue == 1 ? " month" : " months");
+                }
+            } else {
+                dueText = yearsUntilDue + (yearsUntilDue == 1 ? " year" : " years");
+            }
+
             
             //clone the new card
             let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
             //populate with title, image
                 
-            newcard.querySelector('.card-name').innerHTML = name + "<span class=\"badge bg-primary rounded-pill card-due fs-5 mx-4 mt-auto mb-auto\">14</span>";
+            newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
             //newcard.querySelector('.card-status').innerHTML = status;
             //newcard.querySelector('.card-category').innerHTML = category;
             newcard.querySelector('.card-description').innerHTML = desc;
-            newcard.querySelector('.card-due').innerHTML = due;
+            newcard.querySelector('.card-due').innerHTML = dueText;
             //append to the posts
             document.getElementById("mytasks-go-here").append(newcard);
 }
