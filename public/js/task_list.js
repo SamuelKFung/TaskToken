@@ -72,6 +72,7 @@ function getTasks(){
             console.log(user.uid)
             db.collection("users").doc(user.uid)
             .collection("tasks") //subcollection
+            .orderBy("duedate")
             .get()
             .then(doclist=>{
                 doclist.forEach(doc=>{
