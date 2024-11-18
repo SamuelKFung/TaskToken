@@ -79,7 +79,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <input type="submit" id="addTask" class="btn btn-success">
                 </div>
-                <form>
+                </form>
             </div>
         </div>
     </div>
@@ -97,18 +97,14 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <!-- Updated Delete Task Button -->
-                    <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                        onclick="setTaskToDelete('TASK_ID')">Delete Task</button>
-
+                    <button type="button" class="btn btn-danger" id="deleteTaskButton">Delete Task</button>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- List of Tasks-->  
-    <div class="container mt-4"> 
+    <!-- List of Tasks-->
+    <div class="container mt-4">
         <div class="d-flex mb-4">
             <h2>Upcoming Tasks</h2>
             <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal"
@@ -122,34 +118,79 @@
 
     <!-- Templates for general use, not displayed -->
     <template id="taskCardTemplate">
-        <div class="accordion">
-            <div class="accordion-item">
+        <div class="accordion-item" data-task-id="">
             <h2 class="accordion-header">
-                <button id="toggleBtn" class="accordion-button card-name" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                aria-expanded="true" aria-controls="collapseOne">
-                Accordion Item #1
+                <button class="accordion-button card-name" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                    Task Title
                 </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></p>
+            <div id="collapseOne" class="accordion-collapse collapse">
                 <div class="accordion-body card-description">
+                    Task description here...
                 </div>
                 <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
-                <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                data-bs-whatever="Delete Task">Delete Task</button>
+                    data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
+                <button type="button" class="btn btn-danger mt-auto mb-auto deleteTaskBtn">Delete Task</button>
                 <br>
-            </div>
             </div>
         </div>
     </template>
 
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>
-        
+
     <!-- Link to scripts of your own -->
     <script src="js/firebaseAPI_BBY09.js"></script>
     <script src="js/skeleton.js"></script>
     <script src="js/task_list.js"></script>
+
+    <script>
+        // JavaScript for Task Deletion
+
+        // Define a global variable to hold the task ID of the task to delete
+        let taskToDeleteId = null;
+
+        // Add event listeners when the document is fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            // For each delete button inside a task card, add an event listener
+            document.querySelectorAll('.deleteTaskBtn').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    // Get the task ID (stored in the data attribute of the button)
+                    taskToDeleteId = event.target.closest('.accordion-item').getAttribute('data-task-id');
+                    
+                    // Show the delete confirmation modal
+                    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+                });
+            });
+
+            // Confirm Deletion (Clicking 'Delete Task' in the modal)
+            document.getElementById('deleteTaskButton').addEventListener('click', function() {
+                if (taskToDeleteId !== null) {
+                    deleteTask(taskToDeleteId);
+                }
+            });
+        });
+
+        // Function to delete the task (from the UI and database if applicable)
+        function deleteTask(taskId) {
+            // Step 1: Remove the task from the DOM
+            const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
+            if (taskCard) {
+                taskCard.remove();
+            }
+
+            // Step 2: If you're using Firebase or another backend, remove the task from there as well
+            // Example for Firebase Firestore (uncomment and modify as needed):
+            // firebase.firestore().collection("tasks").doc(taskId).delete();
+
+            // Close the delete modal after deleting the task
+            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+            modal.hide();
+
+            // Reset taskToDeleteId for safety
+            taskToDeleteId = null;
+        }
+    </script>
 
 </body>
 
