@@ -6,6 +6,7 @@ form.addEventListener('submit', writeTasks);
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
+const deleteModal = document.getElementById('deleteModal'); // Assuming your delete modal has this ID
 
 // Check if the modal exists on the page
 if (exampleModal) {
@@ -174,10 +175,16 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
 
-    // Add the delete functionality
-    let deleteButton = newcard.querySelector('#delete-this'); // Assuming your button in the template has the id 'delete-this'
+    // Get the delete button and set up event listener to trigger the modal
+    let deleteButton = newcard.querySelector('.btn-danger'); // Assuming your button in the template has class 'btn-danger'
     deleteButton.addEventListener('click', function() {
-        deleteTask(doc.id); // Pass the task ID to delete the task
+        // Set the taskId in the modal's delete button data attribute
+        const deleteTaskButton = deleteModal.querySelector('.btn-delete-task');
+        deleteTaskButton.setAttribute('data-task-id', doc.id);
+
+        // Show the delete modal
+        var myModalEl = new bootstrap.Modal(deleteModal);
+        myModalEl.show();
     });
 
     // Append the new card to the tasks container
@@ -201,5 +208,16 @@ function deleteTask(taskId) {
         } else {
             console.log("No user logged in");
         }
+    });
+}
+
+// Handle the delete button click in the delete modal
+const deleteTaskButton = document.querySelector('.btn-delete-task'); // The button in the delete modal
+if (deleteTaskButton) {
+    deleteTaskButton.addEventListener('click', function() {
+        // Get the task ID from the button's data-task-id attribute
+        const taskId = deleteTaskButton.getAttribute('data-task-id');
+        // Delete the task
+        deleteTask(taskId);
     });
 }

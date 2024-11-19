@@ -110,11 +110,13 @@ var count = 1;
 
 // Function to display a task card in the UI
 function displayMytaskCard(doc) {
+    // Get the task details from Firestore
     var name = doc.data().name;
     var desc = doc.data().description;
     let due = new Date(doc.data().duedate);
     let today = new Date();
 
+    // Calculate the time difference between the due date and today
     let yearsUntilDue = due.getYear() - today.getYear();
     let monthsUntilDue = due.getMonth() - today.getMonth();
     let daysUntilDue = due.getDate() - today.getDate();
@@ -122,6 +124,7 @@ function displayMytaskCard(doc) {
     var category = doc.data().category;
     var status = doc.data().status ? "Open" : "Close";
 
+    // Get the accordion button element (used for collapsible task details)
     let accordianBtn = document.getElementById("toggleBtn");
     if (accordianBtn) {
         accordianBtn.setAttribute("aria-controls", "collapse" + count);
@@ -129,11 +132,13 @@ function displayMytaskCard(doc) {
         accordianBtn.removeAttribute("id");
     }
 
+    // Generate a unique collapse ID for each task card
     let collapseID = document.getElementById("collapseOne");
     if (collapseID) {
         collapseID.id = "collapse" + count++;
     }
 
+    // Determine the badge color based on the task's due date
     let pillBadgeColor;
     if (daysUntilDue > 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-success";
@@ -145,16 +150,19 @@ function displayMytaskCard(doc) {
         pillBadgeColor = "bg-success";
     }
 
+    // Highlight task with a red border if it's due today
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor += " border border-danger border-5";
     }
 
-    let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
+    // Create the task name with the appropriate badge color
+    let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">14</span>";
 
+    // Format the due date message based on how close the task is to being due
     let dueText;
     if (Math.abs(yearsUntilDue) < 1) {
         if (Math.abs(monthsUntilDue) < 1) {
-            if (daysUntilDue > 0) {
+            if (daysUntilDue > 0 && daysUntilDue < 30) {
                 dueText = daysUntilDue + (daysUntilDue == 1 ? " day out" : " days out");
             } else if (daysUntilDue < 0) {
                 dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late");
@@ -162,10 +170,10 @@ function displayMytaskCard(doc) {
                 dueText = "Due today!";
             }
         } else {
-            dueText = (monthsUntilDue >= 0 ? monthsUntilDue : -monthsUntilDue) + (monthsUntilDue == 1 ? " month out" : " months out");
+            dueText = (daysUntilDue >= 0 ? monthsUntilDue : -monthsUntilDue) + (monthsUntilDue == 1 ? " month out" : " months out");
         }
     } else {
-        dueText = (yearsUntilDue >= 0 ? yearsUntilDue : -yearsUntilDue) + (yearsUntilDue == 1 ? " year out" : " years out");
+        dueText = (daysUntilDue >= 0 ? yearsUntilDue : -yearsUntilDue) + (yearsUntilDue == 1 ? " year out" : " years out");
     }
 
     // Clone the task card template and populate it with the task data
@@ -174,32 +182,6 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
 
-    // Add the delete functionality
-    let deleteButton = newcard.querySelector('#delete-this'); // Assuming your button in the template has the id 'delete-this'
-    deleteButton.addEventListener('click', function() {
-        deleteTask(doc.id); // Pass the task ID to delete the task
-    });
-
     // Append the new card to the tasks container
     document.getElementById("mytasks-go-here").append(newcard);
-}
-
-// Function to delete a task from Firestore
-function deleteTask(taskId) {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
-
-            taskRef.delete().then(() => {
-                console.log("Task deleted!");
-                // Reload the task list to reflect the deletion
-                document.getElementById('mytasks-go-here').innerHTML = "";
-                getTasks();
-            }).catch((error) => {
-                console.error("Error deleting task: ", error);
-            });
-        } else {
-            console.log("No user logged in");
-        }
-    });
 }
