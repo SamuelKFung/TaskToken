@@ -24,6 +24,15 @@ if (exampleModal) {
         const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
         const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
 
+        // If category is miscellaneous then disable course input field
+        modalCategory.addEventListener("change", () => {
+            if (modalCategory.value == "Miscellaneous") {
+                modalCourse.disabled = true;
+            } else {
+                modalCourse.disabled = false;
+            }
+        })
+
         // If the recipient is "Add Task", reset the form fields to empty
         if (recipient == "Add Task") {
             modalTitle.value = "";
@@ -179,7 +188,7 @@ function writeTasks(event) {
         if (user) {
             // Get a reference to the tasks collection in Firestore
             var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
-
+            console.log(user.uid)
             // Get the values entered by the user in the modal
             var taskName = document.getElementById('title').value;
             var taskCourse = document.getElementById('course').value;

@@ -26,7 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const modalBackground = exampleModal.querySelector(".modal-content");
             modalTitleContent.textContent = info.event.title;
             modalCategory.textContent = "Category: " + info.event.extendedProps.category;
-            modalCourse.textContent = "Course: " + info.event.extendedProps.course;
+            if (info.event.extendedProps.course) {
+                modalCourse.textContent = "Course: " + info.event.extendedProps.course;
+            } else {
+                modalCourse.textContent = "";
+            }
             modalDate.textContent = "Due Date: " + info.event.start;
             if (info.event.extendedProps.description){
             modalDescription.textContent = "Description: " + info.event.extendedProps.description;
