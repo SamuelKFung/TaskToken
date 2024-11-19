@@ -228,12 +228,11 @@ function deleteTask(taskId) {
             modalDate.value = "";
             modalDescription.value = "";
         }
-        /* 
         if (recipient == "Edit Task") { 
             modalTitle.value = document.getElementById('task-name-goes-here').innerHTML; 
             modalDate.value = document.getElementById('due-date-goes-here').innerHTML; 
             modalDescription.value = document.getElementById('description-goes-here').innerHTML; 
-        }*/
+        }
         // Update the modal's content. 
         const modalTitleContent = exampleModal.querySelector('.modal-title');
         modalTitleContent.textContent = recipient;
