@@ -175,7 +175,7 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-due').innerHTML = dueText;
 
     // Add the delete functionality
-    let deleteButton = newcard.querySelector('.btn-danger'); // Assuming your button in the template has the class 'btn-danger'
+    let deleteButton = newcard.querySelector('#delete-this'); // Assuming your button in the template has the id 'delete-this'
     deleteButton.addEventListener('click', function() {
         deleteTask(doc.id); // Pass the task ID to delete the task
     });

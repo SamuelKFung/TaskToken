@@ -159,7 +159,7 @@ function displayMytaskCard(doc) {
             } else if (daysUntilDue < 0) {
                 dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late");
             } else {
-                dueText = "due today!";
+                dueText = "Due today!";
             }
         } else {
             dueText = (monthsUntilDue >= 0 ? monthsUntilDue : -monthsUntilDue) + (monthsUntilDue == 1 ? " month out" : " months out");
