@@ -134,17 +134,18 @@ function displayMytaskCard(doc) {
         collapseID.id = "collapse" + count++;
     }
 
-    let pillBadgeColor; 
-    if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0) || (yearsUntilDue > 0)) { 
-        pillBadgeColor = "text-bg-success"; 
-    } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
-        pillBadgeColor = "text-bg-warning"; 
-    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) { 
-        pillBadgeColor = "text-bg-danger"; 
-    } else { 
-        // for debugging purposes. this colour should never display if the above code is correct.
-        pillBadgeColor = "bg-primary"; 
-    } 
+    let pillBadgeColor;
+
+    if (daysUntilDue > 3 && (monthsUntilDue > 0 || yearsUntilDue > 0)) {
+        pillBadgeColor = "text-bg-success"; // Task is far in the future
+    } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue === 0 && yearsUntilDue === 0) {
+        pillBadgeColor = "text-bg-warning"; // Task is due within 3 days
+    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) {
+        pillBadgeColor = "text-bg-danger"; // Task is overdue
+    } else {
+        pillBadgeColor = "bg-success"; // Default case (future task, > 3 days away)
+    }
+
 
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor += " border border-danger border-5";

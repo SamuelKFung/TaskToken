@@ -142,7 +142,7 @@ function displayMytaskCard(doc) {
     } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) { 
         pillBadgeColor = "text-bg-danger"; 
     } else { 
-        // for debugging purposes. this colour should never display if the above code is correct.
+        // this is for debugging purposes. this colour should never display if the above code is correct
         pillBadgeColor = "bg-primary"; 
     } 
 

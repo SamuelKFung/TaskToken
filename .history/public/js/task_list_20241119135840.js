@@ -135,15 +135,23 @@ function displayMytaskCard(doc) {
     }
 
     let pillBadgeColor; 
-    if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0) || (yearsUntilDue > 0)) { 
+
+    if (daysUntilDue > 3 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
+
         pillBadgeColor = "text-bg-success"; 
+
     } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
+
         pillBadgeColor = "text-bg-warning"; 
-    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) { 
+
+    } else if (daysUntilDue < 0 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
+
         pillBadgeColor = "text-bg-danger"; 
+
     } else { 
-        // for debugging purposes. this colour should never display if the above code is correct.
-        pillBadgeColor = "bg-primary"; 
+
+        pillBadgeColor = "bg-success"; 
+
     } 
 
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {

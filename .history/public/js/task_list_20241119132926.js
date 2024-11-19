@@ -134,17 +134,16 @@ function displayMytaskCard(doc) {
         collapseID.id = "collapse" + count++;
     }
 
-    let pillBadgeColor; 
-    if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0) || (yearsUntilDue > 0)) { 
-        pillBadgeColor = "text-bg-success"; 
-    } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
-        pillBadgeColor = "text-bg-warning"; 
-    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) { 
-        pillBadgeColor = "text-bg-danger"; 
-    } else { 
-        // for debugging purposes. this colour should never display if the above code is correct.
-        pillBadgeColor = "bg-primary"; 
-    } 
+    let pillBadgeColor;
+    if (daysUntilDue > 3 || monthsUntilDue > 0 || yearsUntilDue > 0) {
+        pillBadgeColor = "text-bg-success";
+    } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
+        pillBadgeColor = "text-bg-warning";
+    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) {
+        pillBadgeColor = "text-bg-danger";
+    } else {
+        pillBadgeColor = "bg-success";
+    }
 
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor += " border border-danger border-5";
@@ -154,27 +153,49 @@ function displayMytaskCard(doc) {
 
     let dueText;
     if (Math.abs(yearsUntilDue) < 1) {
+
         if (Math.abs(monthsUntilDue) < 1) {
+
             if (daysUntilDue > 0) {
+
                 dueText = daysUntilDue + (daysUntilDue == 1 ? " day out" : " days out");
+
             } else if (daysUntilDue < 0) {
+
                 dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late");
+
             } else {
+
                 dueText = "Due today!";
+
             }
+
         } else {
+
             if (monthsUntilDue >= 0) {
+
                 dueText = monthsUntilDue + (monthsUntilDue == 1 ? " month out" : " months out");
+
             } else {
+
                 dueText = -monthsUntilDue + (monthsUntilDue == -1 ? " month late" : " months late");
+
             }
+
         }
+
     } else {
+
         if (yearsUntilDue >= 0) {
+
             dueText = yearsUntilDue + (yearsUntilDue == 1 ? " year out" : " years out");
+
         } else {
+
             dueText = -yearsUntilDue + (yearsUntilDue == -1 ? " year late" : " years late");
+
         }
+
     } 
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
@@ -183,7 +204,7 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-due').innerHTML = dueText;
 
     // Add the delete functionality
-    let deleteButton = newcard.querySelector('.btn-danger'); // Assuming your button in the template has the class 'btn-danger'
+    let deleteButton = newcard.querySelector('#confirmDelete'); // Assuming your button in the template has the class 'btn-danger'
     deleteButton.addEventListener('click', function() {
         deleteTask(doc.id); // Pass the task ID to delete the task
     });
