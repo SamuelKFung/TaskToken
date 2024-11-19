@@ -25,15 +25,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const modalDescription = exampleModal.querySelector(".modal-body p[id='description']");
             const modalBackground = exampleModal.querySelector(".modal-content");
             modalTitleContent.textContent = info.event.title;
-            modalCourse.textContent = "Course: " + info.event.extendedProps.course;
             modalCategory.textContent = "Category: " + info.event.extendedProps.category;
+            modalCourse.textContent = "Course: " + info.event.extendedProps.course;
             modalDate.textContent = "Due Date: " + info.event.start;
             if (info.event.extendedProps.description){
             modalDescription.textContent = "Description: " + info.event.extendedProps.description;
             } else {
                 modalDescription.textContent = "";
             }
-            modalBackground.style.border = "2px solid black";
+            modalBackground.style.border = "1px solid white";
             modalBackground.style.backgroundColor = info.event.backgroundColor 
             myModal.show();
         }

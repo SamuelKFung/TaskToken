@@ -6,16 +6,7 @@ form.addEventListener('submit', writeTasks);
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
-const dModal = document.getElementById('deleteModal');
-/*
-if (dModal) {
-    dModal.addEventListener('show.bs.modal', event => {
-        const button = event.relatedTarget;
-        const recipient = button.getAttribute('id');
-        let test = dModal.querySelector("#delete-this")
-        console.log(test)
-    })
-}*/
+
 // Check if the modal exists on the page
 if (exampleModal) {
     // Add event listener for when the modal is shown
@@ -37,7 +28,7 @@ if (exampleModal) {
         if (recipient == "Add Task") {
             modalTitle.value = "";
             modalCourse.value = "";
-            modalCategory.value = "assignments";
+            modalCategory.value = "Assignment";
             modalDate.value = "";
             modalDescription.value = "";
         }
@@ -121,74 +112,37 @@ function displayMytaskCard(doc) {
 
     let dueText;
     if (Math.abs(yearsUntilDue) < 1) {
-
         if (Math.abs(monthsUntilDue) < 1) {
-
             if (daysUntilDue > 0) {
-
                 dueText = daysUntilDue + (daysUntilDue == 1 ? " day out" : " days out");
-
             } else if (daysUntilDue < 0) {
-
                 dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late");
-
             } else {
-
                 dueText = "Due today!";
-
             }
-
         } else {
-
             if (monthsUntilDue >= 0) {
-
                 dueText = monthsUntilDue + (monthsUntilDue == 1 ? " month out" : " months out");
-
             } else {
-
                 dueText = -monthsUntilDue + (monthsUntilDue == -1 ? " month late" : " months late");
-
             }
-
         }
-
     } else {
-
         if (yearsUntilDue >= 0) {
-
             dueText = yearsUntilDue + (yearsUntilDue == 1 ? " year out" : " years out");
-
         } else {
-
             dueText = -yearsUntilDue + (yearsUntilDue == -1 ? " year late" : " years late");
-
         }
+    }
 
-    } 
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
     newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
 
-    // Add the delete functionality
-    if (dModal) {
-        /*
-        dModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            //let deleteButton = dModal.querySelector('#delete-this'); 
-            button.addEventListener('click', function() {
-                deleteTask(doc.id); // Pass the task ID to delete the task
-        })*/
-    
-        let deleteButton = dModal.querySelector('#delete-this'); // Assuming your button in the template has the id 'delete-this'
-        console.log(deleteButton)
-        deleteButton.addEventListener('click', function() {
-            deleteTask(doc.id); // Pass the task ID to delete the task
-        });
-    }
     let deleteButton = newcard.querySelector('.btn-danger'); // Assuming your button in the template has the class 'btn-danger'
-    deleteButton.addEventListener('click', function() {
+    deleteButton.addEventListener('click', function () {
         deleteTask(doc.id); // Pass the task ID to delete the task
     });
 
@@ -219,7 +173,7 @@ function deleteTask(taskId) {
 function writeTasks(event) {
     // Prevent the default form submission behavior
     event.preventDefault();
-    
+
     // Check if the user is authenticated
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
@@ -244,7 +198,7 @@ function writeTasks(event) {
             });
             console.log("Task added!");
 
-             // Hide the modal after submission
+            // Hide the modal after submission
             var myModalEl = document.getElementById('exampleModal');
             var modal = bootstrap.Modal.getInstance(myModalEl);
             modal.hide();
