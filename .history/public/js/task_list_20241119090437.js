@@ -6,16 +6,7 @@ form.addEventListener('submit', writeTasks);
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
-const dModal = document.getElementById('deleteModal');
-/*
-if (dModal) {
-    dModal.addEventListener('show.bs.modal', event => {
-        const button = event.relatedTarget;
-        const recipient = button.getAttribute('id');
-        let test = dModal.querySelector("#delete-this")
-        console.log(test)
-    })
-}*/
+
 // Check if the modal exists on the page
 if (exampleModal) {
     // Add event listener for when the modal is shown
@@ -46,6 +37,47 @@ if (exampleModal) {
         const modalTitleContent = exampleModal.querySelector('.modal-title');
         modalTitleContent.textContent = recipient;
     })
+}
+
+// Function to handle task submission
+function writeTasks(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Check if the user is authenticated
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // Get a reference to the tasks collection in Firestore
+            var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
+
+            // Get the values entered by the user in the modal
+            var taskName = document.getElementById('title').value;
+            var taskCategory = document.getElementById('category').value;
+            var taskDescription = document.getElementById('description').value;
+            var taskdueDate = document.getElementById('date').value;
+
+            // Add a new task to Firestore with the provided details
+            tasksRef.add({
+                name: taskName,
+                category: taskCategory,
+                description: taskDescription,
+                duedate: taskdueDate,
+                status: false // Task is initially set to "not completed"
+            });
+            console.log("Task added!");
+
+            // Hide the modal after submission
+            var myModalEl = document.getElementById('exampleModal');
+            var modal = bootstrap.Modal.getInstance(myModalEl)
+            modal.hide();
+        } else {
+            console.log("No user is signed in");
+        }
+    });
+
+    // Clear the task list and reload it
+    document.getElementById('mytasks-go-here').innerHTML = "";
+    getTasks();
 }
 
 // Function to get and display tasks from Firestore
@@ -103,7 +135,7 @@ function displayMytaskCard(doc) {
     }
 
     let pillBadgeColor;
-    if (daysUntilDue > 3 || monthsUntilDue > 0 || yearsUntilDue > 0) {
+    if (daysUntilDue > 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-success";
     } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-warning";
@@ -172,21 +204,6 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-due').innerHTML = dueText;
 
     // Add the delete functionality
-    if (dModal) {
-        /*
-        dModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            //let deleteButton = dModal.querySelector('#delete-this'); 
-            button.addEventListener('click', function() {
-                deleteTask(doc.id); // Pass the task ID to delete the task
-        })*/
-    
-        let deleteButton = dModal.querySelector('#delete-this'); // Assuming your button in the template has the id 'delete-this'
-        console.log(deleteButton)
-        deleteButton.addEventListener('click', function() {
-            deleteTask(doc.id); // Pass the task ID to delete the task
-        });
-    }
     let deleteButton = newcard.querySelector('.btn-danger'); // Assuming your button in the template has the class 'btn-danger'
     deleteButton.addEventListener('click', function() {
         deleteTask(doc.id); // Pass the task ID to delete the task
@@ -201,6 +218,7 @@ function deleteTask(taskId) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
+
             taskRef.delete().then(() => {
                 console.log("Task deleted!");
                 // Reload the task list to reflect the deletion
@@ -213,47 +231,4 @@ function deleteTask(taskId) {
             console.log("No user logged in");
         }
     });
-}
-
-// Function to handle task submission
-function writeTasks(event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-    
-    // Check if the user is authenticated
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            // Get a reference to the tasks collection in Firestore
-            var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
-
-            // Get the values entered by the user in the modal
-            var taskName = document.getElementById('title').value;
-            var taskCourse = document.getElementById('course').value;
-            var taskCategory = document.getElementById('category').value;
-            var taskDescription = document.getElementById('description').value;
-            var taskdueDate = document.getElementById('date').value;
-
-            // Add a new task to Firestore with the provided details
-            tasksRef.add({
-                name: taskName,
-                course: taskCourse,
-                category: taskCategory,
-                description: taskDescription,
-                duedate: taskdueDate,
-                status: false // Task is initially set to "not completed"
-            });
-            console.log("Task added!");
-
-             // Hide the modal after submission
-            var myModalEl = document.getElementById('exampleModal');
-            var modal = bootstrap.Modal.getInstance(myModalEl);
-            modal.hide();
-        } else {
-            console.log("No user is signed in");
-        }
-    });
-
-    // Clear the task list and reload it
-    document.getElementById('mytasks-go-here').innerHTML = "";
-    getTasks();
 }

@@ -99,7 +99,8 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <!-- Updated Delete Task Button -->
                     <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                    id="delete-this">Delete Task</button>
+                        onclick="setTaskToDelete('TASK_ID')">Delete Task</button>
+
                 </div>
             </div>
         </div>
@@ -132,9 +133,10 @@
             <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></p>
                 <div class="accordion-body card-description">
                 </div>
-                <!-- <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button> -->
-                <button type="button" class="btn btn-danger mt-auto mb-auto">Delete Task</button>
+                <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
+                <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                data-bs-whatever="Delete Task">Delete Task</button>
                 <br>
             </div>
             </div>

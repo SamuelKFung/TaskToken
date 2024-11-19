@@ -58,12 +58,11 @@
                         <div class="mb-3">
                             <label for="category" class="col-form-label">Category:</label>
                             <select class="form-select" id="category" aria-label="Default select example">
-                                <option value="assignment" selected>Assignment</option>
-                                <option value="quiz">Quiz</option>
-                                <option value="lab">Lab</option>
-                                <option value="project">Project</option>
-                                <option value="miscellaneous">Miscellaneous</option>
-
+                                <option value="Assignment" selected>Assignment</option>
+                                <option value="Quiz">Quiz</option>
+                                <option value="Lab">Lab</option>
+                                <option value="Project">Project</option>
+                                <option value="Miscellaneous">Miscellaneous</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -99,7 +98,8 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <!-- Updated Delete Task Button -->
                     <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                    id="delete-this">Delete Task</button>
+                        >Delete Task</button>
+
                 </div>
             </div>
         </div>
@@ -132,9 +132,10 @@
             <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></p>
                 <div class="accordion-body card-description">
                 </div>
-                <!-- <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button> -->
-                <button type="button" class="btn btn-danger mt-auto mb-auto">Delete Task</button>
+                <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
+                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
+                <button type="button" class="btn btn-danger mt-auto mb-auto" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                data-bs-whatever="Delete Task" id="delete-this">Delete Task</button>
                 <br>
             </div>
             </div>
