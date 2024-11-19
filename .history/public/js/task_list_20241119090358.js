@@ -135,14 +135,14 @@ function displayMytaskCard(doc) {
     }
 
     let pillBadgeColor;
-    if (daysUntilDue > 3 || monthsUntilDue > 0 || yearsUntilDue > 0) {
+    if (daysUntilDue > 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-success";
     } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-warning";
-    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) {
+    } else if (daysUntilDue < 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-danger";
     } else {
-        pillBadgeColor = "bg-success";
+        pillBadgeColor = "bg-primary";
     }
 
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {

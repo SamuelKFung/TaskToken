@@ -135,11 +135,11 @@ function displayMytaskCard(doc) {
     }
 
     let pillBadgeColor;
-    if (daysUntilDue > 3 || monthsUntilDue > 0 || yearsUntilDue > 0) {
+    if (daysUntilDue > 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-success";
     } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-warning";
-    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) {
+    } else if (daysUntilDue < 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-danger";
     } else {
         pillBadgeColor = "bg-success";
@@ -152,49 +152,49 @@ function displayMytaskCard(doc) {
     let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
 
     let dueText;
-    if (Math.abs(yearsUntilDue) < 1) {
+    if (Math.abs(yearsUntilDue) < 1) { 
 
-        if (Math.abs(monthsUntilDue) < 1) {
+        if (Math.abs(monthsUntilDue) < 1) { 
 
-            if (daysUntilDue > 0) {
+            if (daysUntilDue > 0) { 
 
-                dueText = daysUntilDue + (daysUntilDue == 1 ? " day out" : " days out");
+                dueText = daysUntilDue + (daysUntilDue == 1 ? " day out" : " days out"); 
 
-            } else if (daysUntilDue < 0) {
+            } else if (daysUntilDue < 0) { 
 
-                dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late");
+                dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late"); 
 
-            } else {
+            } else { 
 
-                dueText = "Due today!";
+                dueText = "Due today!"; 
 
-            }
+            } 
 
-        } else {
+        } else { 
 
-            if (monthsUntilDue >= 0) {
+            if (monthsUntilDue >= 0) { 
 
-                dueText = monthsUntilDue + (monthsUntilDue == 1 ? " month out" : " months out");
+                dueText = monthsUntilDue + (monthsUntilDue == 1 ? " month out" : " months out"); 
 
-            } else {
+            } else { 
 
-                dueText = -monthsUntilDue + (monthsUntilDue == -1 ? " month late" : " months late");
+                dueText = -monthsUntilDue + (monthsUntilDue == -1 ? " month late" : " months late"); 
 
-            }
+            } 
 
-        }
+        } 
 
-    } else {
+    } else { 
 
-        if (yearsUntilDue >= 0) {
+        if (yearsUntilDue >= 0) { 
 
-            dueText = yearsUntilDue + (yearsUntilDue == 1 ? " year out" : " years out");
+            dueText = yearsUntilDue + (yearsUntilDue == 1 ? " year out" : " years out"); 
 
-        } else {
+        } else { 
 
-            dueText = -yearsUntilDue + (yearsUntilDue == -1 ? " year late" : " years late");
+            dueText = -yearsUntilDue + (yearsUntilDue == -1 ? " year late" : " years late"); 
 
-        }
+        } 
 
     } 
     // Clone the task card template and populate it with the task data

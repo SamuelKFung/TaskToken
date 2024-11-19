@@ -135,11 +135,11 @@ function displayMytaskCard(doc) {
     }
 
     let pillBadgeColor;
-    if (daysUntilDue > 3 || monthsUntilDue > 0 || yearsUntilDue > 0) {
+    if (daysUntilDue > 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-success";
     } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-warning";
-    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) {
+    } else if (daysUntilDue < 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor = "text-bg-danger";
     } else {
         pillBadgeColor = "bg-success";
@@ -152,51 +152,24 @@ function displayMytaskCard(doc) {
     let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
 
     let dueText;
-    if (Math.abs(yearsUntilDue) < 1) {
-
-        if (Math.abs(monthsUntilDue) < 1) {
-
+    if (yearsUntilDue < 1) {
+        if (monthsUntilDue < 1) {
             if (daysUntilDue > 0) {
-
                 dueText = daysUntilDue + (daysUntilDue == 1 ? " day out" : " days out");
-
             } else if (daysUntilDue < 0) {
-
                 dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late");
-
             } else {
-
-                dueText = "Due today!";
-
+                dueText = "due today!";
             }
-
         } else {
-
-            if (monthsUntilDue >= 0) {
-
-                dueText = monthsUntilDue + (monthsUntilDue == 1 ? " month out" : " months out");
-
-            } else {
-
-                dueText = -monthsUntilDue + (monthsUntilDue == -1 ? " month late" : " months late");
-
-            }
+            dueText = (monthsUntilDue >= 0 ? monthsUntilDue : -monthsUntilDue) + (monthsUntilDue == 1 ? " month out" : " months out");
+        } else if () {
 
         }
-
     } else {
+        dueText = (yearsUntilDue >= 0 ? yearsUntilDue : -yearsUntilDue) + (yearsUntilDue == 1 ? " year out" : " years out");
+    }
 
-        if (yearsUntilDue >= 0) {
-
-            dueText = yearsUntilDue + (yearsUntilDue == 1 ? " year out" : " years out");
-
-        } else {
-
-            dueText = -yearsUntilDue + (yearsUntilDue == -1 ? " year late" : " years late");
-
-        }
-
-    } 
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
