@@ -24,16 +24,6 @@ if (exampleModal) {
         const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
         const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
 
-        // If category is miscellaneous then disable course input field
-        modalCategory.addEventListener("change", () => {
-            if (modalCategory.value == "Miscellaneous") {
-                modalCourse.disabled = true;
-                modalCourse.value = "";
-            } else {
-                modalCourse.disabled = false;
-            }
-        })
-
         // If the recipient is "Add Task", reset the form fields to empty
         if (recipient == "Add Task") {
             modalTitle.value = "";
@@ -168,7 +158,6 @@ function deleteTask(taskId) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
             taskRef.delete().then(() => {
                 console.log("Task deleted!");
-                alert("Task successfully deleted!");
                 // Reload the task list to reflect the deletion
                 document.getElementById('mytasks-go-here').innerHTML = "";
                 getTasks();
@@ -191,7 +180,7 @@ function writeTasks(event) {
         if (user) {
             // Get a reference to the tasks collection in Firestore
             var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
-            console.log(user.uid)
+
             // Get the values entered by the user in the modal
             var taskName = document.getElementById('title').value;
             var taskCourse = document.getElementById('course').value;
@@ -209,7 +198,6 @@ function writeTasks(event) {
                 status: false // Task is initially set to "not completed"
             });
             console.log("Task added!");
-            alert("Task successfully added!");
 
             // Hide the modal after submission
             var myModalEl = document.getElementById('exampleModal');

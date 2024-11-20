@@ -209,7 +209,6 @@ function writeTasks(event) {
                 status: false // Task is initially set to "not completed"
             });
             console.log("Task added!");
-            alert("Task successfully added!");
 
             // Hide the modal after submission
             var myModalEl = document.getElementById('exampleModal');

@@ -168,7 +168,7 @@ function deleteTask(taskId) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
             taskRef.delete().then(() => {
                 console.log("Task deleted!");
-                alert("Task successfully deleted!");
+                alert("Task successfully deleted!")
                 // Reload the task list to reflect the deletion
                 document.getElementById('mytasks-go-here').innerHTML = "";
                 getTasks();
@@ -209,7 +209,6 @@ function writeTasks(event) {
                 status: false // Task is initially set to "not completed"
             });
             console.log("Task added!");
-            alert("Task successfully added!");
 
             // Hide the modal after submission
             var myModalEl = document.getElementById('exampleModal');
