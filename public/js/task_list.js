@@ -28,6 +28,7 @@ if (exampleModal) {
         modalCategory.addEventListener("change", () => {
             if (modalCategory.value == "Miscellaneous") {
                 modalCourse.disabled = true;
+                modalCourse.value = "";
             } else {
                 modalCourse.disabled = false;
             }
