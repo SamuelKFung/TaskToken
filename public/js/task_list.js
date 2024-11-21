@@ -1,6 +1,6 @@
 // Get the form element by its ID
 var form = document.getElementById("formId");
-
+console.log(form)
 // Global variable pointing to the current user's Firestore document
 var currentUser;
 
@@ -241,6 +241,7 @@ function writeTasks(event) {
         if (user) {
             // Get the task ID (for editing purposes)
             const taskId = document.getElementById('exampleModal').getAttribute('data-task-id');
+            //console,log(taskId)
 
             // Get a reference to the tasks collection in Firestore
             var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
@@ -253,7 +254,7 @@ function writeTasks(event) {
             var taskdueDate = document.getElementById('date').value;
 
             // Update the task in Firestore
-            tasksRef.doc(taskId).update({
+            tasksRef.add({
                 name: taskName,
                 course: taskCourse,
                 category: taskCategory,
@@ -274,7 +275,7 @@ function writeTasks(event) {
             console.log("No user is signed in");
         }
     });
-
+    
     // Find the task card using the taskId
     let taskCard = document.querySelector(`#task-${taskId}`);
     if (taskCard) {
