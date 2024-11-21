@@ -240,8 +240,9 @@ function writeTasks(event) {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             // Get the task ID (for editing purposes)
+            /*
             const taskId = document.getElementById('exampleModal').getAttribute('data-task-id');
-            //console,log(taskId)
+            console.log("this is " + taskId)*/
 
             // Get a reference to the tasks collection in Firestore
             var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
@@ -277,6 +278,7 @@ function writeTasks(event) {
     });
     
     // Find the task card using the taskId
+    /*
     let taskCard = document.querySelector(`#task-${taskId}`);
     if (taskCard) {
         // Update the task card with the new data
@@ -284,7 +286,7 @@ function writeTasks(event) {
         taskCard.querySelector('.card-description').innerHTML = taskDescription;
         taskCard.querySelector('.card-due').innerHTML = "Due: " + taskdueDate; // Example of updating due date text
         taskCard.querySelector('.card-category').innerHTML = taskCategory; // Update category if needed
-    }
+    }*/
 
     // Clear the task list and reload it
     document.getElementById('mytasks-go-here').innerHTML = "";
