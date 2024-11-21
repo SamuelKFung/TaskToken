@@ -1,31 +1,11 @@
 // Get the form element by its ID
 var form = document.getElementById("formId");
 
-// Global variable pointing to the current user's Firestore document
-var currentUser;
-
 // Add an event listener for the form submission to call writeTasks function
 form.addEventListener('submit', writeTasks);
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
-
-//Function that calls everything needed for the main page  
-function doAll() {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            currentUser = db.collection("users").doc(user.uid); //global
-            console.log(currentUser);
-            insertNameFromFirestore();
-            getTasks();
-        } else {
-            // No user is signed in.
-            console.log("No user is signed in");
-            window.location.href = "app/html/login.html";
-        }
-    });
-}
-doAll();
 
 // Check if the modal exists on the page
 if (exampleModal) {
@@ -69,31 +49,31 @@ if (exampleModal) {
     })
 }
 
-// Function to get and display tasks from Firestore in real-time
+// Function to get and display tasks from Firestore
 function getTasks() {
     // Check if the user is authenticated
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            currentUser = db.collection("users").doc(user.id);
             // Query the user's tasks collection, ordered by due date
             db.collection("users").doc(user.uid)
                 .collection("tasks")
                 .orderBy("duedate")
-                .onSnapshot((querySnapshot) => {
-                    // Clear the task list before re-rendering
-                    document.getElementById('mytasks-go-here').innerHTML = "";
-
-                    // Loop through the updated task documents
-                    querySnapshot.forEach((doc) => {
+                .get()
+                .then(doclist => {
+                    doclist.forEach(doc => {
+                        currentTask = doc;
                         // Call the function to display each task
-                        displayMytaskCard(doc);
-                    });
-                });
+                        displayMytaskCard(currentTask);
+                    })
+                })
         } else {
             console.log("No user logged in");
         }
-    });
+    })
 }
+
+// Initial call to get and display tasks when the page loads
+getTasks();
 
 var count = 1;
 
@@ -172,7 +152,7 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-due').innerHTML = dueText;
 
     // Add edit button event listener
-    let editButton = newcard.querySelector('.btn-secondary'); // Assuming you have an edit button in your template
+    let editButton = newcard.querySelector('.btn-edit'); // Assuming you have an edit button in your template
     editButton.addEventListener('click', function () {
         editTask(doc); // Pass the entire document snapshot to the editTask function
     });
@@ -184,26 +164,6 @@ function displayMytaskCard(doc) {
 
     // Append the new card to the tasks container
     document.getElementById("mytasks-go-here").append(newcard);
-}
-
-// Function to delete a task from Firestore
-function deleteTask(taskId) {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
-            taskRef.delete().then(() => {
-                console.log("Task deleted!");
-                alert("Task successfully deleted!");
-                // Reload the task list to reflect the deletion
-                document.getElementById('mytasks-go-here').innerHTML = "";
-                getTasks();
-            }).catch((error) => {
-                console.error("Error deleting task: ", error);
-            });
-        } else {
-            console.log("No user logged in");
-        }
-    });
 }
 
 // Function to handle task editing
@@ -275,28 +235,7 @@ function writeTasks(event) {
         }
     });
 
-    // Find the task card using the taskId
-    let taskCard = document.querySelector(`#task-${taskId}`);
-    if (taskCard) {
-        // Update the task card with the new data
-        taskCard.querySelector('.card-name').innerHTML = taskName + "<span class='badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto text-bg-success'>" + taskdueDate + "</span>"; // Update due date badge
-        taskCard.querySelector('.card-description').innerHTML = taskDescription;
-        taskCard.querySelector('.card-due').innerHTML = "Due: " + taskdueDate; // Example of updating due date text
-        taskCard.querySelector('.card-category').innerHTML = taskCategory; // Update category if needed
-    }
-
     // Clear the task list and reload it
     document.getElementById('mytasks-go-here').innerHTML = "";
     getTasks();
-}
-
-// Insert name function using the global variable "currentUser"
-function insertNameFromFirestore() {
-    currentUser.get().then(userDoc => {
-        //get the user name
-        var user_Name = userDoc.data().name;
-        console.log(user_Name);
-        document.getElementById("name-goes-here").innerText = "Welcome " + user_Name;
-        //document.getElementByID("name-goes-here").innerText = user_Name;
-    })
 }

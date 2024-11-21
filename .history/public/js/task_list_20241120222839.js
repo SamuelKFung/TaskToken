@@ -1,31 +1,11 @@
 // Get the form element by its ID
 var form = document.getElementById("formId");
 
-// Global variable pointing to the current user's Firestore document
-var currentUser;
-
 // Add an event listener for the form submission to call writeTasks function
 form.addEventListener('submit', writeTasks);
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
-
-//Function that calls everything needed for the main page  
-function doAll() {
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            currentUser = db.collection("users").doc(user.uid); //global
-            console.log(currentUser);
-            insertNameFromFirestore();
-            getTasks();
-        } else {
-            // No user is signed in.
-            console.log("No user is signed in");
-            window.location.href = "app/html/login.html";
-        }
-    });
-}
-doAll();
 
 // Check if the modal exists on the page
 if (exampleModal) {
@@ -69,31 +49,31 @@ if (exampleModal) {
     })
 }
 
-// Function to get and display tasks from Firestore in real-time
+// Function to get and display tasks from Firestore
 function getTasks() {
     // Check if the user is authenticated
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            currentUser = db.collection("users").doc(user.id);
             // Query the user's tasks collection, ordered by due date
             db.collection("users").doc(user.uid)
                 .collection("tasks")
                 .orderBy("duedate")
-                .onSnapshot((querySnapshot) => {
-                    // Clear the task list before re-rendering
-                    document.getElementById('mytasks-go-here').innerHTML = "";
-
-                    // Loop through the updated task documents
-                    querySnapshot.forEach((doc) => {
+                .get()
+                .then(doclist => {
+                    doclist.forEach(doc => {
+                        currentTask = doc;
                         // Call the function to display each task
-                        displayMytaskCard(doc);
-                    });
-                });
+                        displayMytaskCard(currentTask);
+                    })
+                })
         } else {
             console.log("No user logged in");
         }
-    });
+    })
 }
+
+// Initial call to get and display tasks when the page loads
+getTasks();
 
 var count = 1;
 
@@ -288,15 +268,4 @@ function writeTasks(event) {
     // Clear the task list and reload it
     document.getElementById('mytasks-go-here').innerHTML = "";
     getTasks();
-}
-
-// Insert name function using the global variable "currentUser"
-function insertNameFromFirestore() {
-    currentUser.get().then(userDoc => {
-        //get the user name
-        var user_Name = userDoc.data().name;
-        console.log(user_Name);
-        document.getElementById("name-goes-here").innerText = "Welcome " + user_Name;
-        //document.getElementByID("name-goes-here").innerText = user_Name;
-    })
 }

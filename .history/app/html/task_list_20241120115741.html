@@ -37,7 +37,7 @@
     <!-- Nav Bar-->
     <nav id="navbarPlaceholder"></nav>
 
-    <!-- Modal for add button -->
+    <!-- Modal for add and edit buttons -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -83,52 +83,6 @@
         </div>
     </div>
 
-    <!-- Modal for edit button -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="formId">
-                        <div class="mb-3">
-                            <label for="title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="title" placeholder="Sprint #4 Agile Planning" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="category" class="col-form-label">Category:</label>
-                            <select class="form-select" id="category" aria-label="Default select example">
-                                <option value="Assignment">Assignment</option>
-                                <option value="Quiz">Quiz</option>
-                                <option value="Lab">Lab</option>
-                                <option value="Project">Project</option>
-                                <option value="Miscellaneous">Miscellaneous</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="course" class="col-form-label">Course:</label>
-                            <input type="text" class="form-control" id="course" placeholder="COMP 1800" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="date" class="col-form-label">Due Date:</label>
-                            <input type="datetime-local" class="form-control" id="date" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" id="description"></textarea required>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <input type="submit" id="editTask" class="btn btn-success">
-                </div>
-                <form>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal for delete button -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -150,13 +104,6 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <h1 id="name-goes-here"></h1>
-        <p>Task it and tackle it now!</p>
-        <div id="counter">
-            <div id="counter-value">0</div>
-        </div>
-    </div>
 
     <!-- List of Tasks-->  
     <div class="container mt-4"> 
@@ -172,27 +119,33 @@
     </div>
 
     <!-- Templates for general use, not displayed -->
-    <template id="taskCardTemplate">
-        <div class="accordion">
-            <div class="accordion-item">
+    <!-- Templates for general use, not displayed -->
+<template id="taskCardTemplate">
+    <div class="accordion">
+        <div class="accordion-item">
             <h2 class="accordion-header">
-                <button id="toggleBtn" class="accordion-button card-name" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                aria-expanded="true" aria-controls="collapseOne">
-                Accordion Item #1
+                <button class="accordion-button card-name d-flex justify-content-between align-items-center"
+                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+                    <span id="task-name">Accordion Item #1</span>
+                    <div class="ms-auto">
+                        <span class="badge rounded-pill card-due fs-5">Due in 3 days</span>
+                    </div>
                 </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></p>
+            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body card-description">
+                    <!-- Task description goes here -->
                 </div>
-                <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="Edit Task">Edit Task</button>
-                <button type="button" class="btn btn-danger mt-auto mb-auto">Delete Task</button>
+                <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto edit-task-btn"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Task</button>
+                <button type="button" class="btn btn-danger mt-auto mb-auto delete-task-btn">Delete Task</button>
                 <br>
             </div>
-            </div>
         </div>
-    </template>
-
+    </div>
+</template>
+    
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>
         
