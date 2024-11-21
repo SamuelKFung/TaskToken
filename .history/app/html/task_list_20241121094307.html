@@ -49,7 +49,7 @@
                     <form id="formId">
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Title:</label>
-                            <input type="text" name="test" class="form-control" id="title" placeholder="Sprint #4 Agile Planning" required>
+                            <input type="text" name="test" class="form-control" id="title" placeholder="Sprint #4 Agile Planning">
                         </div>
                         <div class="mb-3">
                             <label for="category" class="col-form-label">Category:</label>
@@ -84,7 +84,6 @@
     </div>
 
     <!-- Modal for edit button -->
-    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -96,7 +95,7 @@
                     <form id="formId">
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="title" placeholder="Sprint #4 Agile Planning">
+                            <input type="text" class="form-control" id="title" placeholder="Sprint #4 Agile Planning" required>
                         </div>
                         <div class="mb-3">
                             <label for="category" class="col-form-label">Category:</label>
@@ -110,15 +109,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="course" class="col-form-label">Course:</label>
-                            <input type="text" class="form-control" id="course" placeholder="COMP 1800">
+                            <input type="text" class="form-control" id="course" placeholder="COMP 1800" required>
                         </div>
                         <div class="mb-3">
                             <label for="date" class="col-form-label">Due Date:</label>
-                            <input type="datetime-local" class="form-control" id="date">
+                            <input type="datetime-local" class="form-control" id="date" required>
                         </div>
                         <div class="mb-3">
                             <label for="description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" id="description"></textarea>
+                            <textarea class="form-control" id="description"></textarea required>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -151,13 +150,6 @@
         </div>
     </div>
 
-    <div class="text-center">
-        <h1 id="name-goes-here"></h1>
-        <p>Task it and tackle it now!</p>
-        <div id="counter">
-            <div id="counter-value">0</div>
-        </div>
-    </div>
 
     <!-- List of Tasks-->  
     <div class="container mt-4"> 
