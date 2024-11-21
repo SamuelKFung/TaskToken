@@ -49,29 +49,27 @@ if (exampleModal) {
     })
 }
 
-// Function to get and display tasks from Firestore in real-time
+// Function to get and display tasks from Firestore
 function getTasks() {
     // Check if the user is authenticated
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            // Set up the real-time listener for the tasks collection
+            // Query the user's tasks collection, ordered by due date
             db.collection("users").doc(user.uid)
                 .collection("tasks")
                 .orderBy("duedate")
-                .onSnapshot((querySnapshot) => {
-                    // Clear the task list before re-rendering
-                    document.getElementById('mytasks-go-here').innerHTML = "";
-
-                    // Loop through the updated task documents
-                    querySnapshot.forEach((doc) => {
+                .get()
+                .then(doclist => {
+                    doclist.forEach(doc => {
+                        currentTask = doc;
                         // Call the function to display each task
-                        displayMytaskCard(doc);
-                    });
-                });
+                        displayMytaskCard(currentTask);
+                    })
+                })
         } else {
             console.log("No user logged in");
         }
-    });
+    })
 }
 
 // Initial call to get and display tasks when the page loads
@@ -79,6 +77,7 @@ getTasks();
 
 var count = 1;
 
+// Function to display a task card in the UI
 // Function to display a task card in the UI
 function displayMytaskCard(doc) {
     var name = doc.data().name;
@@ -113,6 +112,7 @@ function displayMytaskCard(doc) {
     } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) { 
         pillBadgeColor = "text-bg-danger"; 
     } else { 
+        // for debugging purposes. this colour should never display if the above code is correct.
         pillBadgeColor = "bg-primary"; 
     } 
 
@@ -147,17 +147,19 @@ function displayMytaskCard(doc) {
         }
 
     } 
+
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
-    newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
+    
+    // Get the container that holds the pill (this is where we apply flexbox)
+    let pillContainer = newcard.querySelector('.card-name');
+
+    // Set up flexbox styles for pill container
+    pillContainer.classList.add('d-flex', 'justify-content-between', 'align-items-center');
+    pillContainer.innerHTML = pillBadgeElement;
+
     newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
-
-    // Add edit button event listener
-    let editButton = newcard.querySelector('.btn-secondary'); // Assuming you have an edit button in your template
-    editButton.addEventListener('click', function () {
-        editTask(doc); // Pass the entire document snapshot to the editTask function
-    });
 
     let deleteButton = newcard.querySelector('.btn-danger'); // Assuming your button in the template has the class 'btn-danger'
     deleteButton.addEventListener('click', function () {
@@ -188,32 +190,7 @@ function deleteTask(taskId) {
     });
 }
 
-// Function to handle task editing
-function editTask(doc) {
-    // Get the modal elements
-    const exampleModal = document.getElementById('exampleModal');
-    const modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
-    const modalCourse = exampleModal.querySelector(".modal-body input[id='course']");
-    const modalCategory = exampleModal.querySelector(".modal-body select[id='category']");
-    const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
-    const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
-
-    // Pre-fill the modal with the current task data
-    modalTitle.value = doc.data().name;
-    modalCourse.value = doc.data().course;
-    modalCategory.value = doc.data().category;
-    modalDate.value = doc.data().duedate;
-    modalDescription.value = doc.data().description;
-
-    // Change the modal title to "Edit Task"
-    const modalTitleContent = exampleModal.querySelector('.modal-title');
-    modalTitleContent.textContent = "Edit Task";
-
-    // Store the task ID for later use
-    exampleModal.setAttribute('data-task-id', doc.id);
-}
-
-// Function to handle form submission (editing the task)
+// Function to handle task submission
 function writeTasks(event) {
     // Prevent the default form submission behavior
     event.preventDefault();
@@ -221,12 +198,9 @@ function writeTasks(event) {
     // Check if the user is authenticated
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            // Get the task ID (for editing purposes)
-            const taskId = document.getElementById('exampleModal').getAttribute('data-task-id');
-
             // Get a reference to the tasks collection in Firestore
             var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
-
+            console.log(user.uid)
             // Get the values entered by the user in the modal
             var taskName = document.getElementById('title').value;
             var taskCourse = document.getElementById('course').value;
@@ -234,40 +208,93 @@ function writeTasks(event) {
             var taskDescription = document.getElementById('description').value;
             var taskdueDate = document.getElementById('date').value;
 
-            // Update the task in Firestore
-            tasksRef.doc(taskId).update({
+            // Add a new task to Firestore with the provided details
+            tasksRef.add({
                 name: taskName,
                 course: taskCourse,
                 category: taskCategory,
                 description: taskDescription,
-                duedate: taskdueDate
-            }).then(() => {
-                console.log("Task updated!");
-                alert("Task successfully updated!");
-
-                // Hide the modal after submission
-                var myModalEl = document.getElementById('exampleModal');
-                var modal = bootstrap.Modal.getInstance(myModalEl);
-                modal.hide();
-            }).catch((error) => {
-                console.error("Error updating task: ", error);
+                duedate: taskdueDate,
+                status: false // Task is initially set to "not completed"
             });
+            console.log("Task added!");
+            alert("Task successfully added!");
+
+            // Hide the modal after submission
+            var myModalEl = document.getElementById('exampleModal');
+            var modal = bootstrap.Modal.getInstance(myModalEl);
+            modal.hide();
         } else {
             console.log("No user is signed in");
         }
     });
 
-    // Find the task card using the taskId
-    let taskCard = document.querySelector(`#task-${taskId}`);
-    if (taskCard) {
-        // Update the task card with the new data
-        taskCard.querySelector('.card-name').innerHTML = taskName + "<span class='badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto text-bg-success'>" + taskdueDate + "</span>"; // Update due date badge
-        taskCard.querySelector('.card-description').innerHTML = taskDescription;
-        taskCard.querySelector('.card-due').innerHTML = "Due: " + taskdueDate; // Example of updating due date text
-        taskCard.querySelector('.card-category').innerHTML = taskCategory; // Update category if needed
-    }
-
     // Clear the task list and reload it
     document.getElementById('mytasks-go-here').innerHTML = "";
     getTasks();
+}
+
+// Listen for the 'Edit Task' button click
+document.addEventListener('click', function(event) {
+    // Check if the clicked element has the 'edit-task-btn' class
+    if (event.target.classList.contains('edit-task-btn')) {
+        const taskCard = event.target.closest('.accordion-item'); // Get the closest task card
+        const taskId = taskCard.getAttribute('data-id'); // Get the task's unique ID
+
+        // Fetch task data from Firebase or from the stored array (based on your app's structure)
+        const taskData = getTaskDataById(taskId); // Placeholder function
+
+        // Pre-fill the modal form with the task data
+        document.getElementById('title').value = taskData.title;
+        document.getElementById('category').value = taskData.category;
+        document.getElementById('course').value = taskData.course;
+        document.getElementById('date').value = taskData.dueDate;
+        document.getElementById('description').value = taskData.description;
+
+        // Update the form's submit action to handle task updates (not create a new task)
+        const form = document.getElementById('formId');
+        form.onsubmit = function(event) {
+            event.preventDefault();
+            updateTask(taskId);
+        };
+    }
+});
+
+// Placeholder function to get task data from Firebase or storage
+function getTaskDataById(taskId) {
+    // Implement fetching task data using taskId from Firebase or your local storage
+    // Example return object:
+    return {
+        title: "Sprint #4 Agile Planning",
+        category: "Project",
+        course: "COMP 1800",
+        dueDate: "2024-12-01T09:00",
+        description: "Plan the agile sprint for the project."
+    };
+}
+
+// Function to handle updating the task in Firebase or your storage
+function updateTask(taskId) {
+    // Get updated values from the modal form
+    const title = document.getElementById('title').value;
+    const category = document.getElementById('category').value;
+    const course = document.getElementById('course').value;
+    const dueDate = document.getElementById('date').value;
+    const description = document.getElementById('description').value;
+
+    // Update the task in Firebase or your local storage
+    const taskRef = firebase.firestore().collection('tasks').doc(taskId);
+    taskRef.update({
+        title,
+        category,
+        course,
+        dueDate,
+        description
+    }).then(function() {
+        console.log("Task updated successfully!");
+        // Close the modal after updating
+        $('#exampleModal').modal('hide');
+    }).catch(function(error) {
+        console.error("Error updating task: ", error);
+    });
 }

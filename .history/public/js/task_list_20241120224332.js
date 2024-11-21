@@ -153,6 +153,9 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
 
+    // Add an event listener for the form submission to call writeTasks function
+    form.addEventListener('submit', writeTasks);
+
     // Add edit button event listener
     let editButton = newcard.querySelector('.btn-secondary'); // Assuming you have an edit button in your template
     editButton.addEventListener('click', function () {
