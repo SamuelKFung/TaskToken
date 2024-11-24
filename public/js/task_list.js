@@ -1,11 +1,15 @@
 // Get the form element by its ID
 var form = document.getElementById("formId");
-console.log(form)
+
 // Global variable pointing to the current user's Firestore document
 var currentUser;
 
-// Add an event listener for the form submission to call writeTasks function
-form.addEventListener('submit', writeTasks);
+// Global variable to reference modal fields
+var modalTitle;
+var modalCourse;
+var modalCategory;
+var modalDate;
+var modalDescription;
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
@@ -14,8 +18,7 @@ const exampleModal = document.getElementById('exampleModal');
 function doAll() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            currentUser = db.collection("users").doc(user.uid); //global
-            console.log(currentUser);
+            currentUser = db.collection("users").doc(user.uid);
             insertNameFromFirestore();
             getTasks();
         } else {
@@ -33,16 +36,15 @@ if (exampleModal) {
     exampleModal.addEventListener('show.bs.modal', event => {
         // Get the button that triggered the modal
         const button = event.relatedTarget;
-
         // Get the value of the 'data-bs-whatever' attribute of the button (e.g., "Add Task")
         const recipient = button.getAttribute('data-bs-whatever');
 
         // Get the modal input and textarea elements for task details
-        const modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
-        const modalCourse = exampleModal.querySelector(".modal-body input[id='course']");
-        const modalCategory = exampleModal.querySelector(".modal-body select[id='category']");
-        const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
-        const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
+        modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
+        modalCourse = exampleModal.querySelector(".modal-body input[id='course']");
+        modalCategory = exampleModal.querySelector(".modal-body select[id='category']");
+        modalDate = exampleModal.querySelector(".modal-body input[id='date']");
+        modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
 
         // If category is miscellaneous then disable course input field
         modalCategory.addEventListener("change", () => {
@@ -54,18 +56,23 @@ if (exampleModal) {
             }
         })
 
-        // If the recipient is "Add Task", reset the form fields to empty
+        // If the recipient is "Add Task", reset the form fields to empty and add listener on submit
         if (recipient == "Add Task") {
             modalTitle.value = "";
             modalCourse.value = "";
             modalCategory.value = "Assignment";
             modalDate.value = "";
             modalDescription.value = "";
+            form.addEventListener('submit', writeTasks);
         }
 
         // Set the modal title to match the recipient (e.g., "Add Task")
         const modalTitleContent = exampleModal.querySelector('.modal-title');
         modalTitleContent.textContent = recipient;
+    })
+    // Clear event listener to avoid adding and editing happening from one submit
+    exampleModal.addEventListener('hide.bs.modal', () => {
+        form.removeEventListener('submit', writeTasks);
     })
 }
 
@@ -171,15 +178,18 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
 
-    // Add edit button event listener
-    let editButton = newcard.querySelector('.btn-secondary'); // Assuming you have an edit button in your template
+    // Add edit button and event listener to each card 
+    let editButton = newcard.querySelector('#editTask'); 
     editButton.addEventListener('click', function () {
-        editTask(doc); // Pass the entire document snapshot to the editTask function
+        // Pass the entire document snapshot to the editTask function
+        editTasks(doc.id); 
     });
 
-    let deleteButton = newcard.querySelector('.btn-danger'); // Assuming your button in the template has the class 'btn-danger'
+    // Add delete button and event listener to each card
+    let deleteButton = newcard.querySelector('#deleteTask'); 
     deleteButton.addEventListener('click', function () {
-        deleteTask(doc.id); // Pass the task ID to delete the task
+         // Pass the task ID to delete the task
+        deleteTask(doc.id);
     });
 
     // Append the new card to the tasks container
@@ -192,10 +202,7 @@ function deleteTask(taskId) {
         if (user) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
             taskRef.delete().then(() => {
-                console.log("Task deleted!");
                 alert("Task successfully deleted!");
-                // Reload the task list to reflect the deletion
-                document.getElementById('mytasks-go-here').innerHTML = "";
                 getTasks();
             }).catch((error) => {
                 console.error("Error deleting task: ", error);
@@ -206,32 +213,7 @@ function deleteTask(taskId) {
     });
 }
 
-// Function to handle task editing
-function editTask(doc) {
-    // Get the modal elements
-    const exampleModal = document.getElementById('exampleModal');
-    const modalTitle = exampleModal.querySelector(".modal-body input[id='title']");
-    const modalCourse = exampleModal.querySelector(".modal-body input[id='course']");
-    const modalCategory = exampleModal.querySelector(".modal-body select[id='category']");
-    const modalDate = exampleModal.querySelector(".modal-body input[id='date']");
-    const modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
-
-    // Pre-fill the modal with the current task data
-    modalTitle.value = doc.data().name;
-    modalCourse.value = doc.data().course;
-    modalCategory.value = doc.data().category;
-    modalDate.value = doc.data().duedate;
-    modalDescription.value = doc.data().description;
-
-    // Change the modal title to "Edit Task"
-    const modalTitleContent = exampleModal.querySelector('.modal-title');
-    modalTitleContent.textContent = "Edit Task";
-
-    // Store the task ID for later use
-    exampleModal.setAttribute('data-task-id', doc.id);
-}
-
-// Function to handle form submission (editing the task)
+// Function to writing tasks data to Firestore
 function writeTasks(event) {
     // Prevent the default form submission behavior
     event.preventDefault();
@@ -239,11 +221,6 @@ function writeTasks(event) {
     // Check if the user is authenticated
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
-            // Get the task ID (for editing purposes)
-            /*
-            const taskId = document.getElementById('exampleModal').getAttribute('data-task-id');
-            console.log("this is " + taskId)*/
-
             // Get a reference to the tasks collection in Firestore
             var tasksRef = db.collection("users").doc(user.uid).collection("tasks");
 
@@ -254,7 +231,7 @@ function writeTasks(event) {
             var taskDescription = document.getElementById('description').value;
             var taskdueDate = document.getElementById('date').value;
 
-            // Update the task in Firestore
+            // Add the task in Firestore
             tasksRef.add({
                 name: taskName,
                 course: taskCourse,
@@ -262,13 +239,12 @@ function writeTasks(event) {
                 description: taskDescription,
                 duedate: taskdueDate
             }).then(() => {
-                console.log("Task updated!");
-                alert("Task successfully updated!");
-
+                console.log("Task added!");
                 // Hide the modal after submission
                 var myModalEl = document.getElementById('exampleModal');
                 var modal = bootstrap.Modal.getInstance(myModalEl);
                 modal.hide();
+                getTasks();
             }).catch((error) => {
                 console.error("Error updating task: ", error);
             });
@@ -276,30 +252,57 @@ function writeTasks(event) {
             console.log("No user is signed in");
         }
     });
-    
-    // Find the task card using the taskId
-    /*
-    let taskCard = document.querySelector(`#task-${taskId}`);
-    if (taskCard) {
-        // Update the task card with the new data
-        taskCard.querySelector('.card-name').innerHTML = taskName + "<span class='badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto text-bg-success'>" + taskdueDate + "</span>"; // Update due date badge
-        taskCard.querySelector('.card-description').innerHTML = taskDescription;
-        taskCard.querySelector('.card-due').innerHTML = "Due: " + taskdueDate; // Example of updating due date text
-        taskCard.querySelector('.card-category').innerHTML = taskCategory; // Update category if needed
-    }*/
+}
 
-    // Clear the task list and reload it
-    document.getElementById('mytasks-go-here').innerHTML = "";
-    getTasks();
+// Function to handle editing task
+function editTasks(taskId) {
+    // Check if the user is authenticated
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // Get a reference to the specific task that needs to be updated
+            var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
+            taskRef.get().then(userDoc => {
+                // Update modal fields according to the specific task properties
+                modalTitle.value = userDoc.data().name;
+                modalCourse.value = userDoc.data().course;
+                modalCategory.value = userDoc.data().category;
+                modalDescription.value = userDoc.data().description;
+                modalDate.value = userDoc.data().duedate;
+            })
+            
+            // Add listener for submission when editting task 
+            form.addEventListener('submit', function updateTask(event) {
+                // Prevent page refresh
+                event.preventDefault();
+                // Update Firestore values according to modal inputs
+                taskRef.update({
+                    name: modalTitle.value,
+                    category: modalCategory.value,
+                    course: modalCourse.value,
+                    description: modalDescription.value,
+                    duedate: modalDate.value
+                }).then(() => {
+                    // Remove edit submit to prevent triggering with add submit 
+                    form.removeEventListener('submit', updateTask);
+                    // Hide the modal after submission
+                    var myModalEl = document.getElementById('exampleModal');
+                    var modal = bootstrap.Modal.getInstance(myModalEl);
+                    modal.hide();
+                    getTasks();
+                })  
+            })
+        } else {
+            console.log("No user is signed in");
+        }
+    });
 }
 
 // Insert name function using the global variable "currentUser"
 function insertNameFromFirestore() {
     currentUser.get().then(userDoc => {
-        //get the user name
+        //Get the user name
         var user_Name = userDoc.data().name;
         console.log(user_Name);
         document.getElementById("name-goes-here").innerText = "Welcome " + user_Name;
-        //document.getElementByID("name-goes-here").innerText = user_Name;
     })
 }
