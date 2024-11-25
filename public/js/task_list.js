@@ -129,9 +129,9 @@ function displayMytaskCard(doc) {
     const daysInYear = 365.25;
     const daysInMonth = 30.44;
 
-    const monthsUntilDue = Math.floor((daysUntilDue % daysInYear) / daysInMonth);
+    const monthsUntilDue = Math.round((daysUntilDue % daysInYear) / daysInMonth);
     console.log("Months Until Due:", monthsUntilDue); // Debugging log
-    const yearsUntilDue = Math.floor(daysUntilDue / daysInYear);
+    const yearsUntilDue = Math.round(daysUntilDue / daysInYear);
     console.log("Years Until Due:", yearsUntilDue); // Debugging log
 
     var category = doc.data().category;
