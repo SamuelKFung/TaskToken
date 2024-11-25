@@ -131,7 +131,7 @@ function displayMytaskCard(doc) {
     }
 
     let pillBadgeColor; 
-    if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0) || (yearsUntilDue > 0)) { 
+    if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0 && yearsUntilDue >= 0) || (yearsUntilDue > 0)) { 
         pillBadgeColor = "text-bg-success"; 
     } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
         pillBadgeColor = "text-bg-warning"; 
