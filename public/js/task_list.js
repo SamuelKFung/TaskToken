@@ -10,6 +10,7 @@ var modalCourse;
 var modalCategory;
 var modalDate;
 var modalDescription;
+var modalGrade;
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
@@ -45,6 +46,7 @@ if (exampleModal) {
         modalCategory = exampleModal.querySelector(".modal-body select[id='category']");
         modalDate = exampleModal.querySelector(".modal-body input[id='date']");
         modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
+        modalGrade = exampleModal.querySelector(".modal-body input[id='grade']");
 
         // If category is miscellaneous then disable course input field
         modalCategory.addEventListener("change", () => {
@@ -63,6 +65,7 @@ if (exampleModal) {
             modalCategory.value = "Assignment";
             modalDate.value = "";
             modalDescription.value = "";
+            modalGrade.value = "";
             form.addEventListener('submit', writeTasks);
         }
 
@@ -116,6 +119,7 @@ function displayMytaskCard(doc) {
 
     // Calculates due date and time (Unix)
     const dueUnixTime = Math.floor(due.getTime() / 1000);
+    console.log("Due date in unix time:", dueUnixTime);
     const secondsInDay = 86400;
 
     // Calculate the difference in seconds
@@ -136,6 +140,15 @@ function displayMytaskCard(doc) {
 
     var category = doc.data().category;
     var status = doc.data().status ? "Open" : "Close";
+
+    // Check if the task is not due yet (daysUntilDue > 0)
+    let gradeInput = document.getElementById('grade'); // Assuming you have an element with id 'grade'
+
+    if (timeDifference > 0) {
+        gradeInput.disabled = true;
+    } else {
+        gradeInput.disabled = false;
+    }
 
     let accordianBtn = document.getElementById("toggleBtn");
     if (accordianBtn) {
@@ -309,7 +322,8 @@ function editTasks(taskId) {
                     category: modalCategory.value,
                     course: modalCourse.value,
                     description: modalDescription.value,
-                    duedate: modalDate.value
+                    duedate: modalDate.value,
+                    grade: modalGrade.value
                 }).then(() => {
                     // Remove edit submit to prevent triggering with add submit 
                     form.removeEventListener('submit', updateTask);
