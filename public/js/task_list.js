@@ -111,9 +111,28 @@ function displayMytaskCard(doc) {
     let due = new Date(doc.data().duedate);
     let today = new Date();
 
-    let yearsUntilDue = due.getYear() - today.getYear();
-    let monthsUntilDue = due.getMonth() - today.getMonth();
-    let daysUntilDue = due.getDate() - today.getDate();
+    // Current time (Unix)
+    const currentUnixTime = Math.floor(Date.now() / 1000);
+
+    // Calculates due date and time (Unix)
+    const dueUnixTime = Math.floor(due.getTime() / 1000);
+    const secondsInDay = 86400;
+
+    // Calculate the difference in seconds
+    const timeDifference = dueUnixTime - currentUnixTime;
+    console.log("Time Difference (in seconds):", timeDifference); // Debugging log
+
+    const daysUntilDue = Math.floor(timeDifference / secondsInDay);
+    console.log("Days Until Due:", daysUntilDue); // Debugging log
+
+    // Calculate the difference in months and years (approximate)
+    const daysInYear = 365.25;
+    const daysInMonth = 30.44;
+
+    const monthsUntilDue = Math.floor((daysUntilDue % daysInYear) / daysInMonth);
+    console.log("Months Until Due:", monthsUntilDue); // Debugging log
+    const yearsUntilDue = Math.floor(daysUntilDue / daysInYear);
+    console.log("Years Until Due:", yearsUntilDue); // Debugging log
 
     var category = doc.data().category;
     var status = doc.data().status ? "Open" : "Close";
@@ -147,31 +166,41 @@ function displayMytaskCard(doc) {
 
     let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
 
+    // Calculate dueText based on whether the task is overdue, due today, or in the future
     let dueText;
-    if (Math.abs(yearsUntilDue) < 1) {
-        if (Math.abs(monthsUntilDue) < 1) {
-            if (daysUntilDue > 0) {
-                dueText = daysUntilDue + (daysUntilDue == 1 ? " day out" : " days out");
-            } else if (daysUntilDue < 0) {
-                dueText = -daysUntilDue + (daysUntilDue == -1 ? " day late" : " days late");
+    if (daysUntilDue === 0) {
+        // Case where task is due today
+        dueText = "Due today!";
+    } else if (daysUntilDue > 0) {
+        // Case where task is not due yet
+        if (Math.abs(yearsUntilDue) < 1) {
+            if (Math.abs(monthsUntilDue) < 1) {
+                // Show days
+                dueText = daysUntilDue + (daysUntilDue === 1 ? " day until due" : " days until due");
             } else {
-                dueText = "Due today!";
+                // Show months
+                dueText = monthsUntilDue + (monthsUntilDue === 1 ? " month until due" : " months until due");
             }
         } else {
-            if (monthsUntilDue >= 0) {
-                dueText = monthsUntilDue + (monthsUntilDue == 1 ? " month out" : " months out");
-            } else {
-                dueText = -monthsUntilDue + (monthsUntilDue == -1 ? " month late" : " months late");
-            }
+            // Show years
+            dueText = yearsUntilDue + (yearsUntilDue === 1 ? " year until due" : " years until due");
         }
     } else {
-        if (yearsUntilDue >= 0) {
-            dueText = yearsUntilDue + (yearsUntilDue == 1 ? " year out" : " years out");
+        // Case where task is overdue
+        if (daysUntilDue > -daysInYear) {
+            if (daysUntilDue > -daysInMonth) {
+                // Show days overdue
+                dueText = Math.abs(daysUntilDue) + (Math.abs(daysUntilDue) === 1 ? " day overdue" : " days overdue");
+            } else {
+                // Show months overdue
+                dueText = Math.abs(monthsUntilDue) + (Math.abs(monthsUntilDue) === 1 ? " month overdue" : " months overdue");
+            }
         } else {
-            dueText = -yearsUntilDue + (yearsUntilDue == -1 ? " year late" : " years late");
+            // Show years overdue
+            dueText = Math.abs(yearsUntilDue) + (Math.abs(yearsUntilDue) === 1 ? " year overdue" : " years overdue");
         }
-
-    } 
+    }
+    
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
