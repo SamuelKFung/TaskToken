@@ -111,6 +111,7 @@ var count = 1;
 function displayMytaskCard(doc) {
     var name = doc.data().name;
     var desc = doc.data().description;
+    var course = doc.data().course;
     let due = new Date(doc.data().duedate);
     let today = new Date();
 
@@ -239,6 +240,7 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
     newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
+    newcard.querySelector('.card-course').innerHTML = course;
 
     // Add edit button and event listener to each card 
     let editButton = newcard.querySelector('#editTask'); 
