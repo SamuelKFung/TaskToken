@@ -214,6 +214,9 @@ function displayMytaskCard(doc) {
         }
     }
     
+    // Colour coding task cards based on category
+
+
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
@@ -244,7 +247,7 @@ function deleteTask(taskId) {
         if (user) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
             taskRef.delete().then(() => {
-                alert("Task successfully deleted!");
+                swal("Good job!", "Task successfully deleted!", "success");
                 getTasks();
             }).catch((error) => {
                 console.error("Error deleting task: ", error);
@@ -282,6 +285,7 @@ function writeTasks(event) {
                 duedate: taskdueDate
             }).then(() => {
                 console.log("Task added!");
+                swal("Good job!", "Task successfully added!", "success");
                 // Hide the modal after submission
                 var myModalEl = document.getElementById('exampleModal');
                 var modal = bootstrap.Modal.getInstance(myModalEl);
@@ -312,7 +316,7 @@ function editTasks(taskId) {
                 modalDate.value = userDoc.data().duedate;
             })
             
-            // Add listener for submission when editting task 
+            // Add listener for submission when editing task 
             form.addEventListener('submit', function updateTask(event) {
                 // Prevent page refresh
                 event.preventDefault();
@@ -332,6 +336,8 @@ function editTasks(taskId) {
                     var modal = bootstrap.Modal.getInstance(myModalEl);
                     modal.hide();
                     getTasks();
+                    console.log("Task edited!");
+                    swal("Good job!", "Task successfully edited!", "success");
                 })  
             })
         } else {
