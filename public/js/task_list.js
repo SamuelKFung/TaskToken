@@ -122,34 +122,45 @@ function displayMytaskCard(doc) {
     console.log("Due date in unix time:", dueUnixTime);
     const secondsInDay = 86400;
 
-    // Calculate the difference in seconds
+    // Calculates the difference in seconds
     const timeDifference = dueUnixTime - currentUnixTime;
     console.log("Time Difference (in seconds):", timeDifference); // Debugging log
 
     const daysUntilDue = Math.floor(timeDifference / secondsInDay);
     console.log("Days Until Due:", daysUntilDue); // Debugging log
 
-    // Calculate the difference in months and years (approximate)
+    // The approximate number of days in a year and month
     const daysInYear = 365.25;
     const daysInMonth = 30.44;
 
+    // Calculates the number of months until a task is due. Uses math rounding rules
+    // (e.g. if a task is due in 50 days, should display "2" for months)
     const monthsUntilDue = Math.round((daysUntilDue % daysInYear) / daysInMonth);
     console.log("Months Until Due:", monthsUntilDue); // Debugging log
+
+    // Calculates the number of years until a task is due. Uses math rounding rules
+    // (e.g. if a task is due in 20 months, should display "2" for years)
     const yearsUntilDue = Math.round(daysUntilDue / daysInYear);
     console.log("Years Until Due:", yearsUntilDue); // Debugging log
 
+    // Determines category of task (lab, assignment, etc)
     var category = doc.data().category;
+    // Determines status of task (complete or incomplete)
     var status = doc.data().status ? "Open" : "Close";
 
-    // Check if the task is not due yet (daysUntilDue > 0)
-    let gradeInput = document.getElementById('grade'); // Assuming you have an element with id 'grade'
+    // Special gradeInput variable
+    let gradeInput = document.getElementById('grade');
 
+    // Check if the task is due yet (timeDifference > 0)
     if (timeDifference > 0) {
-        gradeInput.disabled = true;
+        // If not due yet, grade cannot be inputted
+        gradeInput.disabled = true; 
     } else {
+        // If overdue, grade can be inputted (this is bugged)
         gradeInput.disabled = false;
     }
 
+    // Accordion button definition
     let accordianBtn = document.getElementById("toggleBtn");
     if (accordianBtn) {
         accordianBtn.setAttribute("aria-controls", "collapse" + count);
@@ -162,24 +173,30 @@ function displayMytaskCard(doc) {
         collapseID.id = "collapse" + count++;
     }
 
+    // Due date pill badge color definition
     let pillBadgeColor; 
+    // If more than 3 days out, display pill as green
     if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0 && yearsUntilDue >= 0) || (yearsUntilDue > 0)) { 
         pillBadgeColor = "text-bg-success"; 
+    // If between 0 and 3 days out, display pill as yellow
     } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
         pillBadgeColor = "text-bg-warning"; 
+    // If overdue, display pill as red
     } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) { 
         pillBadgeColor = "text-bg-danger"; 
+    // FOR DEBUGGING PURPOSES: if none of the above are met (which should never happen), display pill as blue
     } else { 
         pillBadgeColor = "bg-primary"; 
     } 
-
+    // If due today, display pill as yellow with a red border
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor += " border border-danger border-5";
     }
 
+    // Task pill badge definition
     let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
 
-    // Calculate dueText based on whether the task is overdue, due today, or in the future
+    // Calculate dueText based on whether the task is overdue, due today, or due in the future
     let dueText;
     if (daysUntilDue === 0) {
         // Case where task is due today
@@ -214,7 +231,7 @@ function displayMytaskCard(doc) {
         }
     }
     
-    // Colour coding task cards based on category
+    // Colour coding task cards based on category (DANIEL WILL TRY THIS LATER)
 
 
     // Clone the task card template and populate it with the task data
@@ -247,6 +264,7 @@ function deleteTask(taskId) {
         if (user) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
             taskRef.delete().then(() => {
+                // SweetAlert for task deletion
                 swal("Good job!", "Task successfully deleted!", "success");
                 getTasks();
             }).catch((error) => {
@@ -285,6 +303,7 @@ function writeTasks(event) {
                 duedate: taskdueDate
             }).then(() => {
                 console.log("Task added!");
+                // SweetAlert for task addition
                 swal("Good job!", "Task successfully added!", "success");
                 // Hide the modal after submission
                 var myModalEl = document.getElementById('exampleModal');
@@ -337,6 +356,7 @@ function editTasks(taskId) {
                     modal.hide();
                     getTasks();
                     console.log("Task edited!");
+                    // SweetAlert for task editing
                     swal("Good job!", "Task successfully edited!", "success");
                 })  
             })
