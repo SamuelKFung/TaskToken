@@ -4,7 +4,8 @@
 function logout() {
     firebase.auth().signOut().then(() => {
         console.log("logging out user");
+        window.location.href = "/";
     }).catch((error) => {
-        // An error happened.
+        console.log("error logging out");
       });
 }
