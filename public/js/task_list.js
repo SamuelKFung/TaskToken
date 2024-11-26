@@ -120,7 +120,7 @@ function displayMytaskCard(doc) {
     }
     var course = "Course: " + doc.data().course;
 
-    // Convert 24-hour due date from Firestore to 12-hour format
+    // Convert 24-hour due date from Firestore to 12-hour format 
     let due = new Date(doc.data().duedate);
     let options = { timeStyle: 'short', hour12: true };
     let timeString = due.toLocaleTimeString('en-US', options);
@@ -205,7 +205,7 @@ function displayMytaskCard(doc) {
     }
 
     // Task pill badge definition
-    let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 mt-auto mb-auto " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
+    let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
 
     // Calculate dueText based on whether the task is overdue, due today, or due in the future
     let dueText;
