@@ -20,7 +20,7 @@ function doAll() {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             currentUser = db.collection("users").doc(user.uid);
-            insertNameFromFirestore();
+            insertInfoFromFirestore();
             getTasks();
         } else {
             // No user is signed in.
@@ -111,9 +111,20 @@ var count = 1;
 // Function to display a task card in the UI
 function displayMytaskCard(doc) {
     var name = doc.data().name;
-    var desc = doc.data().description;
-    var course = doc.data().course;
+    var category = "Category: " + doc.data().category;
+    var desc;
+    if (doc.data().description) {
+        desc = "Description: " + doc.data().description;
+    } else {
+        desc = "";
+    }
+    var course = "Course: " + doc.data().course;
+
+    // Convert 24-hour due date from Firestore to 12-hour format
     let due = new Date(doc.data().duedate);
+    let options = { timeStyle: 'short', hour12: true };
+    let timeString = due.toLocaleTimeString('en-US', options);
+    var dueDisplay = "Due date: " + timeString;
     let today = new Date();
 
     // Current time (Unix)
@@ -145,8 +156,6 @@ function displayMytaskCard(doc) {
     const yearsUntilDue = Math.round(daysUntilDue / daysInYear);
     console.log("Years Until Due:", yearsUntilDue); // Debugging log
 
-    // Determines category of task (lab, assignment, etc)
-    var category = doc.data().category;
     // Determines status of task (complete or incomplete)
     var status = doc.data().status ? "Open" : "Close";
 
@@ -235,13 +244,11 @@ function displayMytaskCard(doc) {
     
     // Colour coding task cards based on category (DANIEL WILL TRY THIS LATER)
 
-
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
-    newcard.querySelector('.card-description').innerHTML = desc;
     newcard.querySelector('.card-due').innerHTML = dueText;
-    newcard.querySelector('.card-course').innerHTML = course;
+    newcard.querySelector('.card-course').innerHTML = course + "<br>" + category + "<br>" + dueDisplay + "<br>" + desc;
 
     // Add edit button and event listener to each card 
     let editButton = newcard.querySelector('#editTask'); 
@@ -373,11 +380,12 @@ function editTasks(taskId) {
 }
 
 // Insert name function using the global variable "currentUser"
-function insertNameFromFirestore() {
+function insertInfoFromFirestore() {
     currentUser.get().then(userDoc => {
         //Get the user name
         var user_Name = userDoc.data().name;
-        console.log(user_Name);
+        var counter = userDoc.data().completed;
         document.getElementById("name-goes-here").innerText = "Welcome " + user_Name;
+        document.getElementById("counter-value").innerText = counter;
     })
 }

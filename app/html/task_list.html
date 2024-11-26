@@ -91,7 +91,7 @@
         <h1 id="name-goes-here"></h1>
         <p>Add a task and tackle it now!</p>
         <div id="counter" class="bg-dark bg-gradient rounded w-25 ms-auto me-auto mt-3 text-warning py-2">
-            <h3>Completed tasks: <span id="counter-value">0</span></h3>
+            <h3>Completed tasks: <span id="counter-value"></span></h3>
         </div>
     </div>
 
@@ -113,22 +113,20 @@
     <template id="taskCardTemplate">
         <div class="accordion">
             <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button id="toggleBtn" class="accordion-button card-name" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                aria-expanded="true" aria-controls="collapseOne">
-                Accordion Item #1
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample"></p>
-                <div class="accordion-body card-course">
+                <h2 class="accordion-header">
+                    <button id="toggleBtn" class="accordion-button card-name" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Accordion Item #1
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body card-course">
+                    </div>
+                    <button type="button" class="btn btn-success"><i class="fa-solid fa-check"></i></button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" data-bs-whatever="Edit Task" id="editTask"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button type="button" class="btn btn-danger" id="deleteTask"><i class="fa-solid fa-trash"></i></button>
                 </div>
-                <div class="accordion-body card-description">
-                </div>
-                <button type="button" class="btn btn-secondary mx-2 mt-auto mb-auto" data-bs-toggle="modal"
-                data-bs-target="#exampleModal" data-bs-whatever="Edit Task" id="editTask">Edit Task</button>
-                <button type="button" class="btn btn-danger mt-auto mb-auto" id="deleteTask">Delete Task</button>
-                <br>
-            </div>
             </div>
         </div>
     </template>
