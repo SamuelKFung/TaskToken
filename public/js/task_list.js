@@ -25,7 +25,7 @@ function doAll() {
         } else {
             // No user is signed in.
             console.log("No user is signed in");
-            window.location.href = "app/html/login.html";
+            //window.location.href = "/";
         }
     });
 }
@@ -90,6 +90,7 @@ function getTasks() {
                 .collection("tasks")
                 .orderBy("duedate")
                 .onSnapshot((querySnapshot) => {
+                    
                     // Clear the task list before re-rendering
                     document.getElementById('mytasks-go-here').innerHTML = "";
 
@@ -258,6 +259,9 @@ function displayMytaskCard(doc) {
 
     // Append the new card to the tasks container
     document.getElementById("mytasks-go-here").append(newcard);
+
+    // When a task is added, hide the no task currently message
+    document.getElementById('notask').style.display = "none";
 }
 
 // Function to delete a task from Firestore

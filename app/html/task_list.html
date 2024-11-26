@@ -75,7 +75,7 @@
                             <input type="datetime-local" class="form-control" id="date" required>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="col-form-label">Description: [Optional]</label>
+                            <label for="description" class="col-form-label">Description (Optional):</label>
                             <textarea class="form-control" id="description"></textarea required>
                         </div>
                 </div>
@@ -87,17 +87,16 @@
             </div>
         </div>
     </div>
-
-    <div class="text-center">
+    <div class="text-center mt-4">
         <h1 id="name-goes-here"></h1>
-        <p>Task it and tackle it now!</p>
-        <div id="counter">
-            <div id="counter-value">0</div>
+        <p>Add a task and tackle it now!</p>
+        <div id="counter" class="bg-dark bg-gradient rounded w-25 ms-auto me-auto mt-3 text-warning py-2">
+            <h3>Completed tasks: <span id="counter-value">0</span></h3>
         </div>
     </div>
 
     <!-- List of Tasks-->  
-    <div class="container mt-4"> 
+    <div class="container mt-5"> 
         <div class="d-flex mb-4">
             <h2>Upcoming Tasks</h2>
             <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal"
@@ -106,6 +105,7 @@
         <!-- Here is the container for cards  -->
         <div class="container">
             <div id="mytasks-go-here"></div>
+            <p class="text-center" id="notask">There are currently no tasks</p>
         </div>
     </div>
 
@@ -135,7 +135,7 @@
 
     <!-- Footer -->
     <nav id="footerPlaceholder"></nav>
-        
+    
     <!-- Link to scripts of your own -->
     <script src="js/firebaseAPI_BBY09.js"></script>
     <script src="js/skeleton.js"></script>
