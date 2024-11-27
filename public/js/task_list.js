@@ -203,10 +203,7 @@ function displayMytaskCard(doc) {
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor += " border border-danger border-5";
     }
-
-    // Task pill badge definition
-    let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
-
+    
     // Calculate dueText based on whether the task is overdue, due today, or due in the future
     let dueText;
     if (daysUntilDue === 0) {
@@ -243,15 +240,19 @@ function displayMytaskCard(doc) {
     }
     
     // Colour coding task cards based on category (DANIEL WILL TRY THIS LATER)
-
+    
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
+
+     // Task pill badge definition
+     let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
     newcard.querySelector('.card-due').innerHTML = dueText;
     newcard.querySelector('.card-course').innerHTML = course + "<br>" + category + "<br>" + dueDisplay + "<br>" + desc;
 
     // Add edit button and event listener to each card 
-    let editButton = newcard.querySelector('#editTask'); 
+    
+    let editButton = newcard.querySelector('#editTask');
     editButton.addEventListener('click', function () {
         // Pass the entire document snapshot to the editTask function
         editTasks(doc.id); 
