@@ -212,7 +212,7 @@ function displayMytaskCard(doc) {
     } else if (daysUntilDue > 0) {
         // Case where task is not due yet
         if (Math.abs(yearsUntilDue) <= 1 && daysUntilDue < daysInYear) {
-            if (Math.abs(monthsUntilDue) < 1) {
+            if (Math.abs(monthsUntilDue) <= 1 && daysUntilDue < daysInMonth) {
                 // Show days
                 dueText = daysUntilDue + (daysUntilDue === 1 ? " day until due" : " days until due");
             } else {
