@@ -265,6 +265,14 @@ function displayMytaskCard(doc) {
         deleteTask(doc.id);
     });
 
+    // Complete button and event listener to each card
+    let completeButton = newcard.querySelector('#completeTask');
+    completeButton.addEventListener('click', function () {
+         // Pass the task ID to complete the task
+        completeTask(doc.id);
+        swal("Good job!", "Task successfully completed!", "success");
+    });
+
     // Append the new card to the tasks container
     document.getElementById("mytasks-go-here").append(newcard);
 
@@ -277,15 +285,47 @@ function deleteTask(taskId) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
-            taskRef.delete().then(() => {
-                // SweetAlert for task deletion
-                swal("Good job!", "Task successfully deleted!", "success");
-                getTasks();
-            }).catch((error) => {
-                console.error("Error deleting task: ", error);
+            // SweetAlert for task deletion
+            swal("Are you sure?", {
+                dangerMode: true,
+                buttons: true,
+              }).then((value) => {
+                if(value) {
+                    taskRef.delete().then(() => {
+                        getTasks();
+                    }).catch((error) => {
+                        console.error("Error deleting task: ", error);
+                    });
+                } else {
+                    console.log("User changed their mind on deleting task");
+                }   
             });
+        }
+    })
+}
+
+// Function to handle completing a task
+function completeTask(taskId) {
+    deleteTask(taskId);
+    // Check if the user is authenticated
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // Get a reference to the specific user
+            var userComp= db.collection("users").doc(user.uid);
+            
+            // Get the "completed" field from Firestore and increase by 1
+            userComp.get().then(userDoc => {
+                var completedTask = userDoc.data().completed;
+                completedTask++;
+                // Update the "completed" field 
+                userComp.update({
+                    completed: completedTask
+                }).then(() => {
+                    document.getElementById("counter-value").innerText = completedTask;
+                })  
+            })
         } else {
-            console.log("No user logged in");
+            console.log("No user is signed in");
         }
     });
 }
@@ -316,9 +356,6 @@ function writeTasks(event) {
                 description: taskDescription,
                 duedate: taskdueDate
             }).then(() => {
-                console.log("Task added!");
-                // SweetAlert for task addition
-                swal("Good job!", "Task successfully added!", "success");
                 // Hide the modal after submission
                 var myModalEl = document.getElementById('exampleModal');
                 var modal = bootstrap.Modal.getInstance(myModalEl);
@@ -364,14 +401,13 @@ function editTasks(taskId) {
                 }).then(() => {
                     // Remove edit submit to prevent triggering with add submit 
                     form.removeEventListener('submit', updateTask);
+                    // SweetAlert for task edit
+                    swal("Great edit!", "Task successfully edited!", "info");
                     // Hide the modal after submission
                     var myModalEl = document.getElementById('exampleModal');
                     var modal = bootstrap.Modal.getInstance(myModalEl);
                     modal.hide();
                     getTasks();
-                    console.log("Task edited!");
-                    // SweetAlert for task editing
-                    swal("Good job!", "Task successfully edited!", "success");
                 })  
             })
         } else {
@@ -386,7 +422,7 @@ function insertInfoFromFirestore() {
         //Get the user name
         var user_Name = userDoc.data().name;
         var counter = userDoc.data().completed;
-        document.getElementById("name-goes-here").innerText = "Welcome " + user_Name;
+        document.getElementById("name-goes-here").innerText = "Welcome " + user_Name + "!";
         document.getElementById("counter-value").innerText = counter;
     })
 }
