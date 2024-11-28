@@ -10,7 +10,6 @@ var modalCourse;
 var modalCategory;
 var modalDate;
 var modalDescription;
-var modalGrade;
 
 // Get the modal element by its ID
 const exampleModal = document.getElementById('exampleModal');
@@ -46,7 +45,6 @@ if (exampleModal) {
         modalCategory = exampleModal.querySelector(".modal-body select[id='category']");
         modalDate = exampleModal.querySelector(".modal-body input[id='date']");
         modalDescription = exampleModal.querySelector(".modal-body textarea[id='description']");
-        modalGrade = exampleModal.querySelector(".modal-body input[id='grade']");
 
         // If category is miscellaneous then disable course input field
         modalCategory.addEventListener("change", () => {
@@ -65,7 +63,6 @@ if (exampleModal) {
             modalCategory.value = "Assignment";
             modalDate.value = "";
             modalDescription.value = "";
-            modalGrade.value = "";
             form.addEventListener('submit', writeTasks);
         }
 
@@ -158,18 +155,6 @@ function displayMytaskCard(doc) {
 
     // Determines status of task (complete or incomplete)
     var status = doc.data().status ? "Open" : "Close";
-
-    // Special gradeInput variable
-    let gradeInput = document.getElementById('grade');
-
-    // Check if the task is due yet (timeDifference > 0)
-    if (timeDifference > 0) {
-        // If not due yet, grade cannot be inputted
-        gradeInput.disabled = true; 
-    } else {
-        // If overdue, grade can be inputted (this is bugged)
-        gradeInput.disabled = false;
-    }
 
     // Accordion button definition
     let accordianBtn = document.getElementById("toggleBtn");
@@ -396,8 +381,7 @@ function editTasks(taskId) {
                     category: modalCategory.value,
                     course: modalCourse.value,
                     description: modalDescription.value,
-                    duedate: modalDate.value,
-                    grade: modalGrade.value
+                    duedate: modalDate.value
                 }).then(() => {
                     // Remove edit submit to prevent triggering with add submit 
                     form.removeEventListener('submit', updateTask);
