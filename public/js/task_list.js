@@ -244,8 +244,8 @@ function displayMytaskCard(doc) {
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
 
-     // Task pill badge definition
-     let pillBadgeElement = name + "<span class=\"badge rounded-pill card-due fs-5 mx-4 " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
+    // Task pill badge definition
+    let pillBadgeElement = name + "<span id=\"badge\" class=\"badge rounded-pill card-due fs-5 mx-4 position-absolute " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
     newcard.querySelector('.card-due').innerHTML = dueText;
     newcard.querySelector('.card-course').innerHTML = course + "<br>" + category + "<br>" + dueDisplay + "<br>" + desc;

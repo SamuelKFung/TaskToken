@@ -18,9 +18,11 @@ body {
     flex-direction: column;
 }
 
+/* Makes footer stay at the bottom */
 #footerPlaceholder {
     margin-top: auto;
 }
+
 /* Main page */
 .header-center {
     text-align: center;
@@ -81,4 +83,9 @@ body {
 
 a {
     text-decoration: none;
+}
+
+/* Task list page */
+#badge {
+    right: 5%;
 }
