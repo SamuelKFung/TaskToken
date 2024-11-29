@@ -82,12 +82,19 @@ function getTasks() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             currentUser = db.collection("users").doc(user.id);
+           
             // Query the user's tasks collection, ordered by due date
             db.collection("users").doc(user.uid)
                 .collection("tasks")
                 .orderBy("duedate")
                 .onSnapshot((querySnapshot) => {
-                    
+                    if (!querySnapshot.empty) {
+                        // If task list is filled then hide no task message
+                        document.getElementById('notask').style.display = "none";
+                    } else {
+                        // If task list is empty then display no task message
+                        document.getElementById('notask').style.display = "block";
+                    }
                     // Clear the task list before re-rendering
                     document.getElementById('mytasks-go-here').innerHTML = "";
 
@@ -119,7 +126,6 @@ function displayMytaskCard(doc) {
 
     // Convert 24-hour due date from Firestore to 12-hour format 
     let due = new Date(doc.data().duedate);
-    let options = { timeStyle: 'short', hour12: true };
     let timeString = due.toLocaleString('en-US');
     var dueDisplay = "Due date: " + timeString;
     let today = new Date();
@@ -260,9 +266,6 @@ function displayMytaskCard(doc) {
 
     // Append the new card to the tasks container
     document.getElementById("mytasks-go-here").append(newcard);
-
-    // When a task is added, hide the no task currently message
-    document.getElementById('notask').style.display = "none";
 }
 
 // Function to delete a task from Firestore
