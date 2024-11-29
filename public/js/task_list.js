@@ -120,7 +120,7 @@ function displayMytaskCard(doc) {
     // Convert 24-hour due date from Firestore to 12-hour format 
     let due = new Date(doc.data().duedate);
     let options = { timeStyle: 'short', hour12: true };
-    let timeString = due.toLocaleTimeString('en-US', options);
+    let timeString = due.toLocaleString('en-US');
     var dueDisplay = "Due date: " + timeString;
     let today = new Date();
 
