@@ -122,7 +122,12 @@ function displayMytaskCard(doc) {
     } else {
         desc = "";
     }
-    var course = "Course: " + doc.data().course;
+    var course; 
+    if (doc.data().course) {
+        course = "Course: " + doc.data().course + "<br>"
+    } else {
+        course = "";
+    }
 
     // Convert 24-hour due date from Firestore to 12-hour format 
     let due = new Date(doc.data().duedate);
@@ -239,7 +244,7 @@ function displayMytaskCard(doc) {
     let pillBadgeElement = name + "<span id=\"badge\" class=\"badge rounded-pill card-due fs-5 mx-4 position-absolute " + pillBadgeColor + "\">" + daysUntilDue + " days</span>";
     newcard.querySelector('.card-name').innerHTML = pillBadgeElement;
     newcard.querySelector('.card-due').innerHTML = dueText;
-    newcard.querySelector('.card-course').innerHTML = course + "<br>" + category + "<br>" + dueDisplay + "<br>" + desc;
+    newcard.querySelector('.card-course').innerHTML = course + category + "<br>" + dueDisplay + "<br>" + desc;
 
     // Add edit button and event listener to each card 
     

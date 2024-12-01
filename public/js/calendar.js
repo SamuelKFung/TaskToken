@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 modalCourse.textContent = "";
             }
-            modalDate.textContent = "Due Date: " + info.event.start;
+            let due = new Date(info.event.start);
+            let timeString = due.toLocaleString('en-US');
+            modalDate.textContent = "Due Date: " + timeString;
             if (info.event.extendedProps.description){
             modalDescription.textContent = "Description: " + info.event.extendedProps.description;
             } else {
