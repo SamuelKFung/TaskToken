@@ -258,14 +258,14 @@ function displayMytaskCard(doc) {
     let deleteButton = newcard.querySelector('#deleteTask'); 
     deleteButton.addEventListener('click', function () {
          // Pass the task ID to delete the task
-        deleteTask(doc.id);
+        deleteTask(doc.id, true);
     });
 
     // Complete button and event listener to each card
     let completeButton = newcard.querySelector('#completeTask');
     completeButton.addEventListener('click', function () {
          // Pass the task ID to complete the task
-        completeTask(doc.id);
+        completeTask(doc.id, false);
         swal("Good job!", "Task successfully completed!", "success");
     });
 
@@ -274,25 +274,31 @@ function displayMytaskCard(doc) {
 }
 
 // Function to delete a task from Firestore
-function deleteTask(taskId) {
+function deleteTask(taskId, flag) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             var taskRef = db.collection("users").doc(user.uid).collection("tasks").doc(taskId);
-            // SweetAlert for task deletion
-            swal("Are you sure?", {
-                dangerMode: true,
-                buttons: true,
-              }).then((value) => {
-                if(value) {
-                    taskRef.delete().then(() => {
-                        getTasks();
-                    }).catch((error) => {
-                        console.error("Error deleting task: ", error);
-                    });
-                } else {
-                    console.log("User changed their mind on deleting task");
-                }   
-            });
+            if (flag) {
+                // SweetAlert for task deletion
+                swal("Are you sure?", {
+                    dangerMode: true,
+                    buttons: true,
+                }).then((value) => {
+                    if(value) {
+                        taskRef.delete().then(() => {
+                            getTasks();
+                        }).catch((error) => {
+                            console.error("Error deleting task: ", error);
+                        });
+                    } else {
+                        console.log("User changed their mind on deleting task");
+                    }   
+                });
+            } else {
+                taskRef.delete().then(() => {
+                    getTasks();
+                });
+            }    
         }
     })
 }
