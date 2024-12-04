@@ -60,6 +60,7 @@ if (exampleModal) {
         if (recipient == "Add Task") {
             modalTitle.value = "";
             modalCourse.value = "";
+            modalCourse.disabled = false;
             modalCategory.value = "Assignment";
             modalDate.value = "";
             modalDescription.value = "";
