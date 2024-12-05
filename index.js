@@ -63,8 +63,8 @@ app.get("/login", function (req, res) {
     res.send(doc);
 });
 
-app.get("/home", function (req, res) {
-    let doc = fs.readFileSync("./app/html/home.html", "utf8");
+app.get("/calendar", function (req, res) {
+    let doc = fs.readFileSync("./app/html/calendar.html", "utf8");
 
     // sending the text stream
     res.send(doc);

@@ -2,6 +2,7 @@
 let calendar;
 
 // Renders calendar from FullCalendar JS library
+// https://fullcalendar.io/
 document.addEventListener('DOMContentLoaded', function () {
     const calendarEl = document.getElementById('calendar');
     // Sets defaults for calendar view

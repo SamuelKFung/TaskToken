@@ -141,15 +141,12 @@ function displayMytaskCard(doc) {
 
     // Calculates due date and time (Unix)
     const dueUnixTime = Math.floor(due.getTime() / 1000);
-    console.log("Due date in unix time:", dueUnixTime);
     const secondsInDay = 86400;
 
     // Calculates the difference in seconds
     const timeDifference = dueUnixTime - currentUnixTime;
-    console.log("Time Difference (in seconds):", timeDifference); // Debugging log
 
     const daysUntilDue = Math.floor(timeDifference / secondsInDay);
-    console.log("Days Until Due:", daysUntilDue); // Debugging log
 
     // The approximate number of days in a year and month
     const daysInYear = 365.25;
@@ -158,12 +155,10 @@ function displayMytaskCard(doc) {
     // Calculates the number of months until a task is due. Uses math rounding rules
     // (e.g. if a task is due in 50 days, should display "2" for months)
     const monthsUntilDue = Math.round((daysUntilDue % daysInYear) / daysInMonth);
-    console.log("Months Until Due:", monthsUntilDue); // Debugging log
 
     // Calculates the number of years until a task is due. Uses math rounding rules
     // (e.g. if a task is due in 20 months, should display "2" for years)
     const yearsUntilDue = Math.round(daysUntilDue / daysInYear);
-    console.log("Years Until Due:", yearsUntilDue); // Debugging log
 
     // Determines status of task (complete or incomplete)
     var status = doc.data().status ? "Open" : "Close";
