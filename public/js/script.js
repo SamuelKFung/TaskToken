@@ -7,5 +7,5 @@ function logout() {
         window.location.href = "/";
     }).catch((error) => {
         console.log("error logging out");
-      });
+    });
 }

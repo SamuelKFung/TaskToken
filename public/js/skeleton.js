@@ -5,9 +5,9 @@
 function loadSkeleton() {
     console.log("loadSkeleton run");
     firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {              
-            console.log("loading post login nav and footer")     
-		        // If the "user" variable is not null, then someone is logged in
+        if (user) {
+            console.log("loading post login nav and footer")
+            // If the "user" variable is not null, then someone is logged in
             // User is signed in.
             // Do something for the user here.
             console.log($('#navbarPlaceholder').load('./nav_after_login'));

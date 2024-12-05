@@ -106,6 +106,6 @@ app.use(function (req, res, next) {
 
 // run server
 let port = 8000;
-app.listen(port, function() {
+app.listen(port, function () {
     console.log("App is listening in port " + port);
 })

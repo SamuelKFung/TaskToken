@@ -83,7 +83,7 @@ function getTasks() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             currentUser = db.collection("users").doc(user.id);
-           
+
             // Query the user's tasks collection, ordered by due date
             db.collection("users").doc(user.uid)
                 .collection("tasks")
@@ -123,7 +123,7 @@ function displayMytaskCard(doc) {
     } else {
         desc = "";
     }
-    var course; 
+    var course;
     if (doc.data().course) {
         course = "Course: " + doc.data().course + "<br>"
     } else {
@@ -182,25 +182,25 @@ function displayMytaskCard(doc) {
     }
 
     // Due date pill badge color definition
-    let pillBadgeColor; 
+    let pillBadgeColor;
     // If more than 3 days out, display pill as green
-    if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0 && yearsUntilDue >= 0) || (yearsUntilDue > 0)) { 
-        pillBadgeColor = "text-bg-success"; 
-    // If between 0 and 3 days out, display pill as yellow
-    } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) { 
-        pillBadgeColor = "text-bg-warning"; 
-    // If overdue, display pill as red
-    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) { 
-        pillBadgeColor = "text-bg-danger"; 
-    // FOR DEBUGGING PURPOSES: if none of the above are met (which should never happen), display pill as blue
-    } else { 
-        pillBadgeColor = "bg-primary"; 
-    } 
+    if ((daysUntilDue >= 3 && monthsUntilDue == 0 && yearsUntilDue == 0) || (monthsUntilDue > 0 && yearsUntilDue >= 0) || (yearsUntilDue > 0)) {
+        pillBadgeColor = "text-bg-success";
+        // If between 0 and 3 days out, display pill as yellow
+    } else if (daysUntilDue >= 0 && daysUntilDue < 3 && monthsUntilDue == 0 && yearsUntilDue == 0) {
+        pillBadgeColor = "text-bg-warning";
+        // If overdue, display pill as red
+    } else if (daysUntilDue < 0 || monthsUntilDue < 0 || yearsUntilDue < 0) {
+        pillBadgeColor = "text-bg-danger";
+        // FOR DEBUGGING PURPOSES: if none of the above are met (which should never happen), display pill as blue
+    } else {
+        pillBadgeColor = "bg-primary";
+    }
     // If due today, display pill as yellow with a red border
     if (daysUntilDue == 0 && monthsUntilDue == 0 && yearsUntilDue == 0) {
         pillBadgeColor += " border border-danger border-5";
     }
-    
+
     // Calculate dueText based on whether the task is overdue, due today, or due in the future
     let dueText;
     if (daysUntilDue === 0) {
@@ -235,9 +235,9 @@ function displayMytaskCard(doc) {
             dueText = Math.abs(yearsUntilDue) + (Math.abs(yearsUntilDue) === 1 ? " year overdue" : " years overdue");
         }
     }
-    
+
     // Colour coding task cards based on category (DANIEL WILL TRY THIS LATER)
-    
+
     // Clone the task card template and populate it with the task data
     let newcard = document.getElementById("taskCardTemplate").content.cloneNode(true);
 
@@ -248,24 +248,24 @@ function displayMytaskCard(doc) {
     newcard.querySelector('.card-course').innerHTML = course + category + "<br>" + dueDisplay + "<br>" + desc;
 
     // Add edit button and event listener to each card 
-    
+
     let editButton = newcard.querySelector('#editTask');
     editButton.addEventListener('click', function () {
         // Pass the entire document snapshot to the editTask function
-        editTasks(doc.id); 
+        editTasks(doc.id);
     });
 
     // Add delete button and event listener to each card
-    let deleteButton = newcard.querySelector('#deleteTask'); 
+    let deleteButton = newcard.querySelector('#deleteTask');
     deleteButton.addEventListener('click', function () {
-         // Pass the task ID to delete the task
+        // Pass the task ID to delete the task
         deleteTask(doc.id, true);
     });
 
     // Complete button and event listener to each card
     let completeButton = newcard.querySelector('#completeTask');
     completeButton.addEventListener('click', function () {
-         // Pass the task ID to complete the task
+        // Pass the task ID to complete the task
         completeTask(doc.id, false);
         swal("Good job!", "Task successfully completed!", "success");
     });
@@ -285,7 +285,7 @@ function deleteTask(taskId, flag) {
                     dangerMode: true,
                     buttons: true,
                 }).then((value) => {
-                    if(value) {
+                    if (value) {
                         taskRef.delete().then(() => {
                             getTasks();
                         }).catch((error) => {
@@ -293,13 +293,13 @@ function deleteTask(taskId, flag) {
                         });
                     } else {
                         console.log("User changed their mind on deleting task");
-                    }   
+                    }
                 });
             } else {
                 taskRef.delete().then(() => {
                     getTasks();
                 });
-            }    
+            }
         }
     })
 }
@@ -311,8 +311,8 @@ function completeTask(taskId) {
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             // Get a reference to the specific user
-            var userComp= db.collection("users").doc(user.uid);
-            
+            var userComp = db.collection("users").doc(user.uid);
+
             // Get the "completed" field from Firestore and increase by 1
             userComp.get().then(userDoc => {
                 var completedTask = userDoc.data().completed;
@@ -322,7 +322,7 @@ function completeTask(taskId) {
                     completed: completedTask
                 }).then(() => {
                     document.getElementById("counter-value").innerText = completedTask;
-                })  
+                })
             })
         } else {
             console.log("No user is signed in");
@@ -385,7 +385,7 @@ function editTasks(taskId) {
                 modalDescription.value = userDoc.data().description;
                 modalDate.value = userDoc.data().duedate;
             })
-            
+
             // Add listener for submission when editing task 
             form.addEventListener('submit', function updateTask(event) {
                 // Prevent page refresh
@@ -407,7 +407,7 @@ function editTasks(taskId) {
                     var modal = bootstrap.Modal.getInstance(myModalEl);
                     modal.hide();
                     getTasks();
-                })  
+                })
             })
         } else {
             console.log("No user is signed in");
