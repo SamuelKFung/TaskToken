@@ -1,17 +1,14 @@
 # TaskToken
 
 ## 1. Project Description
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.  
 This browser based web application to organize all your tasks in one place. Features will include a calendar and a task tracker.
 
 ## 2. Names of Contributors
-List team members and/or short bio's here... 
 * Hi, my name is Daniel! I am excited to fix the Learning Hub!
 * Hi, my name is Samuel! I enjoy playing badminton, gaming and hiking whenever I have free time.
 * Hi I'm Owen, and I like to lift weights.
 	
 ## 3. Technologies and Resources Used
-List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
 * HTML, CSS, JavaScript
 * Bootstrap 5.0 (Frontend library)
 * Firebase 8.0 (BAAS - Backend as a Service)
@@ -20,17 +17,13 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 * Node/Express web application framework
 
 ## 4. Complete setup/installion/usage
-State what a user needs to do when they come to your project.  How do others start using your code or application?
-Here are the steps ...
 * Perform npm install node in the root folder.
 * Run node index.js in the root.
 
 ## 5. Known Bugs and Limitations
-Here are some known bugs:
 * Edit task doesn't track the status of Miscellaneous category leading to Course field displaying improperly.
 
 ## 6. Features for Future
-What we'd like to build in the future:
 * A reward system giving tokens based on number of completed tasks
 * Tokens can be used to customize your own pixel art avatar
 	
